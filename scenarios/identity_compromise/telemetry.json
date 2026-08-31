@@ -1,0 +1,13 @@
+[
+  {"step":1,"timestamp":"2026-01-01T00:00:01Z","event_type":"login","identity_id":"alice","source_ip":"198.51.100.24","detail":"Successful sign-in with valid credentials"},
+  {"step":1,"timestamp":"2026-01-01T00:00:02Z","event_type":"login","identity_id":"bob","source_ip":"203.0.113.12","detail":"Successful sign-in from registered mobile device"},
+  {"step":2,"timestamp":"2026-01-01T00:00:03Z","event_type":"authentication_context","identity_id":"alice","source_ip":"198.51.100.24","detail":"New device and unusual geography within ten minutes"},
+  {"step":2,"timestamp":"2026-01-01T00:00:04Z","event_type":"token_refresh","identity_id":"svc-payments","source_ip":"10.0.4.20","detail":"Scheduled service token refresh"},
+  {"step":3,"timestamp":"2026-01-01T00:00:05Z","event_type":"sensitive_app_access","identity_id":"alice","asset_id":"finance-vault","detail":"First access to finance-vault from this device"},
+  {"step":3,"timestamp":"2026-01-01T00:00:06Z","event_type":"file_download","identity_id":"bob","asset_id":"sales-drive","detail":"Quarterly presentation downloaded"},
+  {"step":4,"timestamp":"2026-01-01T00:00:07Z","event_type":"privilege_activity","identity_id":"alice","asset_id":"finance-vault","detail":"Requested temporary export privilege outside normal workflow"},
+  {"step":5,"timestamp":"2026-01-01T00:00:08Z","event_type":"health_check","identity_id":"svc-payments","asset_id":"payments-api","detail":"Routine production health check"},
+  {"step":6,"timestamp":"2026-01-01T00:00:09Z","event_type":"suspicious_data_access","identity_id":"alice","asset_id":"finance-vault","detail":"Bulk enumeration of sensitive payment records"},
+  {"step":7,"timestamp":"2026-01-01T00:00:10Z","event_type":"login","identity_id":"bob","source_ip":"203.0.113.15","detail":"Known corporate VPN reconnect"}
+]
+

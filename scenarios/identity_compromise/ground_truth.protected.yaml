@@ -1,0 +1,7 @@
+compromised_identity: alice
+legitimate_identities: [bob, svc-payments]
+critical_identities: [svc-payments]
+compromised_sessions: [sess-alice]
+attack_steps: [valid login, unusual authentication context, sensitive app access, privilege activity, suspicious data access]
+attacker_final_objective_step: 6
+

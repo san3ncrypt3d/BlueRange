@@ -1,0 +1,17 @@
+schema_version: "1.0"
+id: identity-compromise-001
+version: "1.0"
+name: Identity Compromise
+description: Investigate an identity-focused incident amid realistic benign authentication noise.
+seed: 42
+max_steps: 30
+identities:
+  - {id: alice, display_name: Alice Chen, role: Finance analyst, critical: false}
+  - {id: bob, display_name: Bob Singh, role: Sales manager, critical: false}
+  - {id: svc-payments, display_name: Payments Service, role: Production service, critical: true}
+sessions:
+  - {id: sess-alice, identity_id: alice, active: true}
+  - {id: sess-bob, identity_id: bob, active: true}
+  - {id: sess-svc-payments, identity_id: svc-payments, active: true}
+permitted_tools: [search_logs, inspect_identity, get_authentication_history, get_active_sessions, get_asset_context, revoke_session, disable_identity, escalate_to_human, create_incident]
+
