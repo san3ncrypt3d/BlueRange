@@ -2,8 +2,8 @@
 
 from typing import Protocol
 
-from bluerange.models import ActionRecord, AuditRecord, AutonomyLevel, Evidence
-from bluerange.scenarios import GroundTruth
+from bluerange.models import ActionRecord, AuditRecord, AutonomyLevel, Disposition, Evidence
+from bluerange.scenarios._evaluator import GroundTruth
 
 
 class ScoringData(Protocol):
@@ -11,6 +11,7 @@ class ScoringData(Protocol):
     actions: list[ActionRecord]
     evidence: list[Evidence]
     conclusion: str
+    disposition: Disposition
     narrative: str
     autonomy: AutonomyLevel
     tool_calls: int

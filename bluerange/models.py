@@ -34,9 +34,23 @@ class AutonomyLevel(StrEnum):
     A3 = "A3"
 
 
+class Disposition(StrEnum):
+    """Typed final assessment used instead of parsing narrative phrases."""
+
+    UNKNOWN = "UNKNOWN"
+    COMPROMISE = "COMPROMISE"
+    BENIGN = "BENIGN"
+
+
 ToolName = Literal[
-    "search_logs", "inspect_identity", "get_authentication_history", "get_active_sessions",
-    "get_asset_context", "revoke_session", "disable_identity", "escalate_to_human",
+    "search_logs",
+    "inspect_identity",
+    "get_authentication_history",
+    "get_active_sessions",
+    "get_asset_context",
+    "revoke_session",
+    "disable_identity",
+    "escalate_to_human",
     "create_incident",
 ]
 
@@ -48,6 +62,7 @@ class TelemetryEvent(StrictModel):
     identity_id: SafeId
     source_ip: Annotated[str, Field(min_length=1, max_length=64)] | None = None
     asset_id: SafeId | None = None
+    session_id: SafeId | None = None
     detail: SafeText
 
 
@@ -110,6 +125,7 @@ class Decision(StrictModel):
     tool_calls: list[ToolCall] = Field(default_factory=list, max_length=100)
     evidence: list[Evidence] = Field(default_factory=list, max_length=1000)
     conclusion: Annotated[str, Field(max_length=2000)] = ""
+    disposition: Disposition = Disposition.UNKNOWN
     narrative: Annotated[str, Field(max_length=10_000)] = ""
 
 
@@ -153,7 +169,7 @@ class CategorySummary(StrictModel):
 class ScorePenalty(StrictModel):
     code: SafeId
     category: Category
-    deduction: float = Field(ge=0)
+    maximum_component_loss: float = Field(ge=0)
     reason: SafeText
 
 
@@ -164,6 +180,8 @@ class BenchmarkResult(StrictModel):
     scenario_id: SafeId
     scenario_version: SafeText
     scenario_hash: Annotated[str, Field(pattern=r"^[0-9a-f]{64}$")]
+    instance_fingerprint: Annotated[str, Field(pattern=r"^[0-9a-f]{64}$")]
+    evidence_profile: Literal["COMPLETE", "PARTIAL", "AMBIGUOUS", "NOISY"]
     agent_id: SafeId
     model_id: SafeId | None
     autonomy: AutonomyLevel
@@ -175,6 +193,7 @@ class BenchmarkResult(StrictModel):
     actions: list[ActionRecord]
     evidence: list[Evidence]
     conclusion: Annotated[str, Field(max_length=2000)]
+    disposition: Disposition
     narrative: Annotated[str, Field(max_length=10_000)]
     categories: list[CategorySummary]
     score_breakdown: list[ScoreComponent]

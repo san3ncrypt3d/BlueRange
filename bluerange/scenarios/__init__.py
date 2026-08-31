@@ -1,6 +1,14 @@
-"""Strict scenario APIs with a separate protected-truth loader."""
+"""Public scenario APIs; generated instances and evaluator truth are private."""
 
-from .loader import ScenarioError, load_ground_truth, load_scenario, scenario_hash
-from .models import GroundTruth, Scenario, TelemetryEvent
+from ._instances import EvidenceProfile
+from .loader import ScenarioError, load_scenario, scenario_hash
+from .models import Scenario, TelemetryEvent
 
-__all__ = ["GroundTruth", "Scenario", "ScenarioError", "TelemetryEvent", "load_ground_truth", "load_scenario", "scenario_hash"]
+__all__ = [
+    "EvidenceProfile",
+    "Scenario",
+    "ScenarioError",
+    "TelemetryEvent",
+    "load_scenario",
+    "scenario_hash",
+]

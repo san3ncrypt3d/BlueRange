@@ -14,16 +14,26 @@ from .investigation import INVESTIGATION, AssetArgs, IdentityArgs, QueryArgs
 from .response import RECORDING, EscalateArgs, IncidentArgs, SessionArgs
 
 ARGUMENT_MODELS: dict[str, type[BaseModel]] = {
-    "search_logs": QueryArgs, "inspect_identity": IdentityArgs,
-    "get_authentication_history": IdentityArgs, "get_active_sessions": IdentityArgs,
-    "get_asset_context": AssetArgs, "revoke_session": SessionArgs,
-    "disable_identity": IdentityArgs, "escalate_to_human": EscalateArgs,
+    "search_logs": QueryArgs,
+    "inspect_identity": IdentityArgs,
+    "get_authentication_history": IdentityArgs,
+    "get_active_sessions": IdentityArgs,
+    "get_asset_context": AssetArgs,
+    "revoke_session": SessionArgs,
+    "disable_identity": IdentityArgs,
+    "escalate_to_human": EscalateArgs,
     "create_incident": IncidentArgs,
 }
 
 
 class ToolController:
-    def __init__(self, environment: Environment, autonomy: AutonomyLevel, agent: str, human_approval: bool = False):
+    def __init__(
+        self,
+        environment: Environment,
+        autonomy: AutonomyLevel,
+        agent: str,
+        human_approval: bool = False,
+    ):
         self.environment = environment
         self.autonomy = autonomy
         self.agent = agent
@@ -43,7 +53,11 @@ class ToolController:
             return None
         if self.autonomy == AutonomyLevel.A1:
             return "A1 permits no response actions"
-        if name == "disable_identity" and self.autonomy == AutonomyLevel.A2 and not self.human_approval:
+        if (
+            name == "disable_identity"
+            and self.autonomy == AutonomyLevel.A2
+            and not self.human_approval
+        ):
             return "A2 identity disablement requires represented human approval"
         return None
 
@@ -56,13 +70,22 @@ class ToolController:
                 clean = ARGUMENT_MODELS[call.name].model_validate(call.arguments).model_dump()
             except ValidationError:
                 denial = "invalid arguments"
-        result = ToolResult(success=False, error=denial) if denial else self.environment.execute(call.name, clean)
+        result = (
+            ToolResult(success=False, error=denial)
+            if denial
+            else self.environment.execute(call.name, clean)
+        )
         redacted = clean if clean else {key: "[invalid]" for key in call.arguments}
         record = AuditRecord(
-            timestamp=datetime(2026, 1, 1, tzinfo=UTC) + timedelta(seconds=step, microseconds=len(self.history)),
-            agent=self.agent, tool=call.name, arguments=redacted,
-            result=result.model_dump(mode="json"), success=result.success,
-            denial_reason=denial, scenario_step=step,
+            timestamp=datetime(2026, 1, 1, tzinfo=UTC)
+            + timedelta(seconds=step, microseconds=len(self.history)),
+            agent=self.agent,
+            tool=call.name,
+            arguments=redacted,
+            result=result.model_dump(mode="json"),
+            success=result.success,
+            denial_reason=denial,
+            scenario_step=step,
             latency_ms=round((perf_counter() - started) * 1000, 3),
         )
         self.history.append(record)

@@ -3,7 +3,8 @@ from pathlib import Path
 import pytest
 
 from bluerange.environment import Environment
-from bluerange.scenarios import ScenarioError, load_ground_truth, load_scenario
+from bluerange.scenarios import ScenarioError, load_scenario
+from bluerange.scenarios._evaluator import load_ground_truth
 
 SCENARIO = Path("scenarios/identity_compromise")
 

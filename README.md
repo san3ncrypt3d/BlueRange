@@ -33,7 +33,7 @@ pip install -e '.[dev]'
 bluerange run --scenario identity-compromise-001 --agent baseline --autonomy A2 --seed 42 --output results/run.json
 ```
 
-A result contains provenance, typed actions, evidence, complete audited tool history, grouped category summaries, explicit penalties, detailed component awards, and a semantic fingerprint. The seed-42 baseline currently reports `Score: 95.0/100`: it contains safely, but its simple rules do not record explicit escalation judgement or provide an ideal incident narrative.
+A result contains provenance, typed actions, evidence, complete audited tool history, grouped category summaries, explicit penalties, detailed component awards, and a semantic fingerprint. The seed-42 baseline currently reports `Score: 93.0/100`: it contains safely, but its simple rules do not record explicit escalation judgement or provide an ideal incident narrative.
 
 ## Autonomy
 
@@ -49,6 +49,8 @@ Controls are enforced in the tool layer, never by prompts. Malformed and prohibi
 ## Development
 
 Run `ruff check .`, `mypy bluerange`, and `pytest`. See [scenario development](docs/architecture.md), [scoring](docs/scoring.md), [autonomy](docs/autonomy.md), and [custom agents](docs/creating-agents.md). Scenarios keep `scenario.yaml` and `telemetry.json` separate from `ground_truth.protected.yaml`.
+
+Benchmark-integrity validation is reproducible with `.venv/bin/python -m tests.validation --output results/benchmark-validation-v0.1.json`. Generated runs use deterministic seeds, evidence profiles, opaque instance fingerprints, and evaluator-only truth. This is an API separation boundary, not a same-process Python sandbox; see the [integrity review](docs/benchmark-integrity-review.md) and [measured validation](docs/benchmark-validation-v0.1.md).
 
 BlueRange deliberately uses the standard `bluerange/__init__.py`; the requested repository list's apparent `init.py` typo is not followed.
 

@@ -8,7 +8,8 @@ from bluerange.agents import LLMDefenderAgent, MockModelProvider
 from bluerange.environment import Environment
 from bluerange.models import AgentContext, AutonomyLevel, BenchmarkResult, Observation, ToolCall
 from bluerange.orchestrator import run_benchmark, semantic_fingerprint
-from bluerange.scenarios import ScenarioError, load_ground_truth, load_scenario
+from bluerange.scenarios import ScenarioError, load_scenario
+from bluerange.scenarios._evaluator import load_ground_truth
 from bluerange.tools import ToolController
 
 
@@ -25,7 +26,9 @@ def test_tool_arguments_reject_extras_and_redact_invalid_values() -> None:
     assert "do-not-log" not in audit.model_dump_json()
 
 
-@pytest.mark.parametrize("filename", ["scenario.yaml", "telemetry.json", "ground_truth.protected.yaml"])
+@pytest.mark.parametrize(
+    "filename", ["scenario.yaml", "telemetry.json", "ground_truth.protected.yaml"]
+)
 def test_scenario_inputs_reject_unknown_fields(tmp_path: Path, filename: str) -> None:
     source = Path("scenarios/identity_compromise")
     for item in source.iterdir():
@@ -43,9 +46,7 @@ def test_scenario_inputs_reject_unknown_fields(tmp_path: Path, filename: str) ->
 
 def test_llm_output_rejects_unknown_fields() -> None:
     agent = LLMDefenderAgent(
-        MockModelProvider(
-            ['{"tool":"search_logs","arguments":{"query":"alice"},"untrusted":true}']
-        )
+        MockModelProvider(['{"tool":"search_logs","arguments":{"query":"alice"},"untrusted":true}'])
     )
     agent.reset(AgentContext(scenario_id="scenario", autonomy=AutonomyLevel.A2, seed=42))
     decision = agent.step(Observation(step=1, events=[]), ())
@@ -69,4 +70,6 @@ def test_queries_have_safe_length_bounds(value: str) -> None:
     controller = ToolController(
         Environment(load_scenario("scenarios/identity_compromise")), AutonomyLevel.A3, "agent"
     )
-    assert not controller.invoke(ToolCall(name="search_logs", arguments={"query": value}), 1).success
+    assert not controller.invoke(
+        ToolCall(name="search_logs", arguments={"query": value}), 1
+    ).success

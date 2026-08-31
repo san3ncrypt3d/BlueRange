@@ -14,8 +14,8 @@ def test_full_seeded_baseline_is_deterministic_and_canonical(tmp_path: Path) -> 
     parsed = json.loads(first.model_dump_json())
     assert parsed["scenario_id"] == "identity-compromise-001"
     assert first.final_score == second.final_score
-    assert any(a.target == "sess-alice" and a.success for a in first.actions)
-    assert not any(a.target in {"bob", "svc-payments"} for a in first.actions)
+    assert any(a.tool == "revoke_session" and a.success for a in first.actions)
+    assert all(not a.target.startswith("sess-") for a in first.actions)
 
     runner = CliRunner()
     assert runner.invoke(app, ["list-scenarios"]).exit_code == 0

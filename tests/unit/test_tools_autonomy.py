@@ -52,7 +52,8 @@ def test_typed_arguments_and_prohibited_calls_fail_closed_and_audit() -> None:
     # Simulate an untrusted caller bypassing normal Pydantic construction: the
     # control layer must still deny and audit it.
     forbidden = controller.invoke(
-        ToolCall.model_construct(name="shell", arguments={"cmd": "id"}), step=2
+        ToolCall.model_construct(name="shell", arguments={"cmd": "id"}),  # type: ignore[arg-type]
+        step=2,
     )
     assert not bad.success and not forbidden.success and len(controller.history) == 2
     assert env.sessions["sess-alice"].active

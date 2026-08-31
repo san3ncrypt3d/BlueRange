@@ -4,4 +4,10 @@ from .base import DefenderAgent, ModelProvider
 from .baseline import BaselineDefenderAgent
 from .llm import LLMDefenderAgent, MockModelProvider
 
-__all__ = ["BaselineDefenderAgent", "DefenderAgent", "LLMDefenderAgent", "MockModelProvider", "ModelProvider"]
+__all__ = [
+    "BaselineDefenderAgent",
+    "DefenderAgent",
+    "LLMDefenderAgent",
+    "MockModelProvider",
+    "ModelProvider",
+]

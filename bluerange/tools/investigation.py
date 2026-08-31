@@ -19,4 +19,10 @@ class AssetArgs(StrictModel):
     asset_id: SafeId
 
 
-INVESTIGATION = {"search_logs", "inspect_identity", "get_authentication_history", "get_active_sessions", "get_asset_context"}
+INVESTIGATION = {
+    "search_logs",
+    "inspect_identity",
+    "get_authentication_history",
+    "get_active_sessions",
+    "get_asset_context",
+}

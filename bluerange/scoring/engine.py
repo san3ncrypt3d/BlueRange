@@ -7,12 +7,13 @@ from bluerange.models import (
     AuditRecord,
     AutonomyLevel,
     CategorySummary,
+    Disposition,
     Evidence,
     ScoreComponent,
     ScorePenalty,
     StrictModel,
 )
-from bluerange.scenarios import GroundTruth
+from bluerange.scenarios._evaluator import GroundTruth
 
 from .effectiveness import score_effectiveness
 from .efficiency import score_efficiency
@@ -25,6 +26,7 @@ class ScoreInput(StrictModel):
     actions: list[ActionRecord]
     evidence: list[Evidence]
     conclusion: str = Field(max_length=2000)
+    disposition: Disposition = Disposition.UNKNOWN
     narrative: str = Field(max_length=10_000)
     autonomy: AutonomyLevel
     tool_calls: int = Field(ge=0, le=100_000)
@@ -51,11 +53,21 @@ def score_run(data: ScoreInput) -> ScoreResult:
             category=category,
             score=sum(item.awarded for item in breakdown if item.category == category),
             maximum=maximum,
-            reasons=[item.reason for item in breakdown if item.category == category and item.awarded < item.maximum],
+            reasons=[
+                item.reason
+                for item in breakdown
+                if item.category == category and item.awarded < item.maximum
+            ],
         )
         for category, maximum in maxima.items()
     ]
     reasons = [item.reason for item in breakdown if item.awarded < item.maximum]
     reasons.extend(item.reason for item in penalties if item.reason not in reasons)
     total = max(0.0, min(100.0, sum(item.score for item in categories)))
-    return ScoreResult(final_score=total, categories=categories, breakdown=breakdown, penalties=penalties, reasons=reasons)
+    return ScoreResult(
+        final_score=total,
+        categories=categories,
+        breakdown=breakdown,
+        penalties=penalties,
+        reasons=reasons,
+    )

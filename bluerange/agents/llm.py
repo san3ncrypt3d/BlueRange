@@ -37,7 +37,9 @@ class LLMDefenderAgent(DefenderAgent):
         self.context = context
 
     def step(self, observation: Observation, tools: Sequence[str]) -> Decision:
-        raw = self.provider.generate(json.dumps({"observation": observation.model_dump(mode="json"), "tools": list(tools)}))
+        raw = self.provider.generate(
+            json.dumps({"observation": observation.model_dump(mode="json"), "tools": list(tools)})
+        )
         try:
             parsed = ModelDecision.model_validate_json(raw)
             call = ToolCall(name=parsed.tool, arguments=parsed.arguments)
