@@ -1,0 +1,276 @@
+{
+  "canary": {
+    "artifact": "results/experiment-002r-canary-2.json",
+    "provider_requests": 3,
+    "status": "PASS"
+  },
+  "formal_002r_authorisation": "NO",
+  "formal_002r_executed": false,
+  "limitations": [
+    "The real protocol matrix contains three isolated cases and is an engineering gate, not a statistical claim.",
+    "All real lab outputs were first-pass valid, so repair behavior is covered by deterministic tests rather than a real repair call.",
+    "The fresh canary contains only one attack/benign pair and reports no benchmark score."
+  ],
+  "root_cause": "Competing provider-native tool metadata, insufficient schema-derived runtime presentation and repair detail, and post-validation-only turn auditing combined to make the defender-v2 contract ambiguous and malformed turns invisible. Qwen 14B adhered on every real neutral case after these generic changes, so the observed defect is classified as runtime presentation and repair/audit mechanics rather than demonstrated model incapacity.",
+  "verification_summary": {
+    "canary_provider_requests": 3,
+    "canonical_v01_sha256": "8e0758bca25658fe3b52c7ce8874a91102e161cce28dc459ac33f11c67c2ef64",
+    "frozen_002r_canary_sha256": "ed7e0b001a00aab064a19e5c337a35557a1e7bc88db36139e3536a70bfc27521",
+    "frozen_002r_smoke_sha256": "5dcf5e06f11c7bd74395aa3a4434c170cd298d7e815e4a5ad09dafacf7890ad1",
+    "frozen_v1_prompt_sha256": "bb152360c77131b5d4b1b53bf33668a1b57d8a50499c979ebe361f4a52c5fdae",
+    "frozen_v1_result_sha256": "cd3b8308e3771f463ec364558008bb8f9d66e30ea467a293ae361a017f7f0958",
+    "frozen_v2_aborted_result_sha256": "e6d677ee3ebae432da02f4bc2b24f14cfbfb7ee50d61eaeb868a4718d8140414",
+    "frozen_v2_prompt_sha256": "1edcb1b12b0d3ef1463c1330015fb127409c76e311323879545297826dfa9fe4",
+    "full_pytest": "127 passed",
+    "lab_provider_requests": 3,
+    "ruff": "PASS",
+    "shared_real_provider_requests": 6,
+    "strict_mypy": "PASS"
+  },
+  "accepted_enum_values": {
+    "action.name": [
+      "inspect_object",
+      "quarantine_object"
+    ],
+    "action.type": [
+      "tool",
+      "recommendation"
+    ],
+    "assessment.disposition": [
+      "UNKNOWN",
+      "COMPROMISE",
+      "BENIGN"
+    ],
+    "lifecycle_state": [
+      "INVESTIGATE",
+      "RESPOND",
+      "FINALIZE"
+    ]
+  },
+  "canonical_action_contract": "singular action; FINALIZE requires explicit action null",
+  "cases": [
+    {
+      "actual_latency_ms": 30510.091,
+      "failure_counts": {},
+      "first_pass_valid": true,
+      "json_valid_responses": 1,
+      "lifecycle_case": "INVESTIGATE",
+      "post_repair_valid": true,
+      "provider_call_audits": [
+        {
+          "call_id": "call-7d9a1f4ee2ef4fd790ddb506fced482e",
+          "error_category": null,
+          "generation_began": true,
+          "http_status": 200,
+          "latency_ms": 30510.091,
+          "model_id": "qwen3:14b-q4_K_M",
+          "output_mode": "JSON_OBJECT",
+          "provider_id": "ollama",
+          "repair_eligible": true,
+          "request_timestamp": "2026-08-31T23:19:51.990446Z",
+          "response_timestamp": "2026-08-31T23:20:22.502196Z",
+          "run_id": "protocol-investigate",
+          "sanitized_error": null,
+          "turn": 1,
+          "usage": {
+            "completion_tokens": 179,
+            "prompt_tokens": 1474,
+            "total_tokens": 1653
+          }
+        }
+      ],
+      "provider_requests": 1,
+      "provider_successes": 1,
+      "repair_attempted": false,
+      "repair_succeeded": false,
+      "turn_audits": [
+        {
+          "latency_ms": 30510.091,
+          "protocol_valid": true,
+          "provider_call_id": "call-7d9a1f4ee2ef4fd790ddb506fced482e",
+          "provider_success": true,
+          "repair": false,
+          "safe_failure_category": null,
+          "usage": {
+            "completion_tokens": 179,
+            "prompt_tokens": 1474,
+            "total_tokens": 1653
+          }
+        }
+      ],
+      "usage": {
+        "input_tokens": 1474,
+        "output_tokens": 179,
+        "total_tokens": 1653
+      }
+    },
+    {
+      "actual_latency_ms": 26858.838,
+      "failure_counts": {},
+      "first_pass_valid": true,
+      "json_valid_responses": 1,
+      "lifecycle_case": "RESPOND",
+      "post_repair_valid": true,
+      "provider_call_audits": [
+        {
+          "call_id": "call-736110d2417e45979bf0c6b8272dd7cd",
+          "error_category": null,
+          "generation_began": true,
+          "http_status": 200,
+          "latency_ms": 26858.838,
+          "model_id": "qwen3:14b-q4_K_M",
+          "output_mode": "JSON_OBJECT",
+          "provider_id": "ollama",
+          "repair_eligible": true,
+          "request_timestamp": "2026-08-31T23:20:22.508990Z",
+          "response_timestamp": "2026-08-31T23:20:49.367862Z",
+          "run_id": "protocol-respond",
+          "sanitized_error": null,
+          "turn": 1,
+          "usage": {
+            "completion_tokens": 188,
+            "prompt_tokens": 1836,
+            "total_tokens": 2024
+          }
+        }
+      ],
+      "provider_requests": 1,
+      "provider_successes": 1,
+      "repair_attempted": false,
+      "repair_succeeded": false,
+      "turn_audits": [
+        {
+          "latency_ms": 26858.838,
+          "protocol_valid": true,
+          "provider_call_id": "call-736110d2417e45979bf0c6b8272dd7cd",
+          "provider_success": true,
+          "repair": false,
+          "safe_failure_category": null,
+          "usage": {
+            "completion_tokens": 188,
+            "prompt_tokens": 1836,
+            "total_tokens": 2024
+          }
+        }
+      ],
+      "usage": {
+        "input_tokens": 1836,
+        "output_tokens": 188,
+        "total_tokens": 2024
+      }
+    },
+    {
+      "actual_latency_ms": 25799.701,
+      "failure_counts": {},
+      "first_pass_valid": true,
+      "json_valid_responses": 1,
+      "lifecycle_case": "FINALIZE",
+      "post_repair_valid": true,
+      "provider_call_audits": [
+        {
+          "call_id": "call-74d477cb0c1e4bf2aff79c2b4048467e",
+          "error_category": null,
+          "generation_began": true,
+          "http_status": 200,
+          "latency_ms": 25799.701,
+          "model_id": "qwen3:14b-q4_K_M",
+          "output_mode": "JSON_OBJECT",
+          "provider_id": "ollama",
+          "repair_eligible": true,
+          "request_timestamp": "2026-08-31T23:20:49.371146Z",
+          "response_timestamp": "2026-08-31T23:21:15.170877Z",
+          "run_id": "protocol-finalize",
+          "sanitized_error": null,
+          "turn": 1,
+          "usage": {
+            "completion_tokens": 147,
+            "prompt_tokens": 1842,
+            "total_tokens": 1989
+          }
+        }
+      ],
+      "provider_requests": 1,
+      "provider_successes": 1,
+      "repair_attempted": false,
+      "repair_succeeded": false,
+      "turn_audits": [
+        {
+          "latency_ms": 25799.701,
+          "protocol_valid": true,
+          "provider_call_id": "call-74d477cb0c1e4bf2aff79c2b4048467e",
+          "provider_success": true,
+          "repair": false,
+          "safe_failure_category": null,
+          "usage": {
+            "completion_tokens": 147,
+            "prompt_tokens": 1842,
+            "total_tokens": 1989
+          }
+        }
+      ],
+      "usage": {
+        "input_tokens": 1842,
+        "output_tokens": 147,
+        "total_tokens": 1989
+      }
+    }
+  ],
+  "competing_legacy_instructions": {
+    "current_lab_native_tools": false,
+    "details": "The provider gateway previously serialized provider-native tools/tool_choice for defender-v2 while the returned JSON schema required singular action.",
+    "existed": true
+  },
+  "gates": {
+    "all_turns_audited": true,
+    "json_syntax_validity_100_percent": true,
+    "no_systematic_schema_defect": true,
+    "post_repair_protocol_validity_at_least_90_percent": true,
+    "provider_request_cap_respected": true,
+    "provider_success_100_percent": true
+  },
+  "independent_recomputation": {
+    "matched": true,
+    "provider_requests": 3
+  },
+  "lab_passed": true,
+  "metrics": {
+    "actual_latency_ms": 83168.63,
+    "failure_counts": {
+      "call_cap": 0,
+      "extra_field": 0,
+      "fabricated_reference": 0,
+      "missing_field": 0,
+      "multiple_actions": 0,
+      "other": 0,
+      "provider_failure": 0,
+      "wrong_action_shape": 0,
+      "wrong_enum": 0
+    },
+    "first_pass_schema_validity_rate": 1.0,
+    "input_tokens": 5152,
+    "json_syntax_validity_rate": 1.0,
+    "output_tokens": 514,
+    "post_repair_protocol_validity_rate": 1.0,
+    "provider_requests": 3,
+    "provider_success_rate": 1.0,
+    "repair_attempts": 0,
+    "repair_success_rate": null,
+    "repair_successes": 0,
+    "total_tokens": 5666
+  },
+  "model": "qwen3:14b-q4_K_M",
+  "parameters": {
+    "model_seed": 17,
+    "output_mode": "JSON_OBJECT",
+    "temperature": 0.2,
+    "timeout_seconds": 600,
+    "top_p": 0.9
+  },
+  "provider": "ollama",
+  "schema_version": "protocol-conformance-v2",
+  "shared_real_provider_request_cap": {
+    "maximum": 12,
+    "used": 3
+  },
+  "timestamp": "2026-08-31T23:21:15.170980+00:00"
+}

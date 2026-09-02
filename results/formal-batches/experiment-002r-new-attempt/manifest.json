@@ -1,0 +1,192 @@
+{
+  "bluerange_version": "0.1.0",
+  "expected_count": 24,
+  "expected_runs": [
+    {
+      "autonomy": "A1",
+      "kind": "attack",
+      "profile": "COMPLETE",
+      "run_id": "run-000001",
+      "seed": 101
+    },
+    {
+      "autonomy": "A1",
+      "kind": "benign",
+      "profile": "COMPLETE",
+      "run_id": "run-000002",
+      "seed": 101
+    },
+    {
+      "autonomy": "A1",
+      "kind": "attack",
+      "profile": "COMPLETE",
+      "run_id": "run-000003",
+      "seed": 202
+    },
+    {
+      "autonomy": "A1",
+      "kind": "benign",
+      "profile": "COMPLETE",
+      "run_id": "run-000004",
+      "seed": 202
+    },
+    {
+      "autonomy": "A1",
+      "kind": "attack",
+      "profile": "AMBIGUOUS",
+      "run_id": "run-000005",
+      "seed": 101
+    },
+    {
+      "autonomy": "A1",
+      "kind": "benign",
+      "profile": "AMBIGUOUS",
+      "run_id": "run-000006",
+      "seed": 101
+    },
+    {
+      "autonomy": "A1",
+      "kind": "attack",
+      "profile": "AMBIGUOUS",
+      "run_id": "run-000007",
+      "seed": 202
+    },
+    {
+      "autonomy": "A1",
+      "kind": "benign",
+      "profile": "AMBIGUOUS",
+      "run_id": "run-000008",
+      "seed": 202
+    },
+    {
+      "autonomy": "A2",
+      "kind": "attack",
+      "profile": "COMPLETE",
+      "run_id": "run-000009",
+      "seed": 101
+    },
+    {
+      "autonomy": "A2",
+      "kind": "benign",
+      "profile": "COMPLETE",
+      "run_id": "run-000010",
+      "seed": 101
+    },
+    {
+      "autonomy": "A2",
+      "kind": "attack",
+      "profile": "COMPLETE",
+      "run_id": "run-000011",
+      "seed": 202
+    },
+    {
+      "autonomy": "A2",
+      "kind": "benign",
+      "profile": "COMPLETE",
+      "run_id": "run-000012",
+      "seed": 202
+    },
+    {
+      "autonomy": "A2",
+      "kind": "attack",
+      "profile": "AMBIGUOUS",
+      "run_id": "run-000013",
+      "seed": 101
+    },
+    {
+      "autonomy": "A2",
+      "kind": "benign",
+      "profile": "AMBIGUOUS",
+      "run_id": "run-000014",
+      "seed": 101
+    },
+    {
+      "autonomy": "A2",
+      "kind": "attack",
+      "profile": "AMBIGUOUS",
+      "run_id": "run-000015",
+      "seed": 202
+    },
+    {
+      "autonomy": "A2",
+      "kind": "benign",
+      "profile": "AMBIGUOUS",
+      "run_id": "run-000016",
+      "seed": 202
+    },
+    {
+      "autonomy": "A3",
+      "kind": "attack",
+      "profile": "COMPLETE",
+      "run_id": "run-000017",
+      "seed": 101
+    },
+    {
+      "autonomy": "A3",
+      "kind": "benign",
+      "profile": "COMPLETE",
+      "run_id": "run-000018",
+      "seed": 101
+    },
+    {
+      "autonomy": "A3",
+      "kind": "attack",
+      "profile": "COMPLETE",
+      "run_id": "run-000019",
+      "seed": 202
+    },
+    {
+      "autonomy": "A3",
+      "kind": "benign",
+      "profile": "COMPLETE",
+      "run_id": "run-000020",
+      "seed": 202
+    },
+    {
+      "autonomy": "A3",
+      "kind": "attack",
+      "profile": "AMBIGUOUS",
+      "run_id": "run-000021",
+      "seed": 101
+    },
+    {
+      "autonomy": "A3",
+      "kind": "benign",
+      "profile": "AMBIGUOUS",
+      "run_id": "run-000022",
+      "seed": 101
+    },
+    {
+      "autonomy": "A3",
+      "kind": "attack",
+      "profile": "AMBIGUOUS",
+      "run_id": "run-000023",
+      "seed": 202
+    },
+    {
+      "autonomy": "A3",
+      "kind": "benign",
+      "profile": "AMBIGUOUS",
+      "run_id": "run-000024",
+      "seed": 202
+    }
+  ],
+  "experiment_id": "experiment-002r-new-attempt",
+  "git": {
+    "commit": "01479fe5a6c001fe3a215ed63d8a03e9d9d1aba7",
+    "dirty": true
+  },
+  "model": "qwen3:14b-q4_K_M",
+  "parameters": {
+    "seed": 17,
+    "temperature": 0.2,
+    "timeout": 600,
+    "top_p": 0.9
+  },
+  "prompt_hash": "1edcb1b12b0d3ef1463c1330015fb127409c76e311323879545297826dfa9fe4",
+  "provider": "ollama",
+  "runtime_version": "3.12.14",
+  "scenario_hash": "e87b96dc51d302ef36662a4f5bbd96978494e82ab42a3326cf5c86fd2c07148c",
+  "scenario_version": "1.1",
+  "started_at": "2026-09-01T02:14:37.485493Z"
+}

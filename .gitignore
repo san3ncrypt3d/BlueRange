@@ -9,3 +9,6 @@ dist/
 build/
 *.egg-info/
 
+# Specific generated validation/fake-provider artefacts; do not ignore results/ wholesale.
+/results/anthropic-provider-validation.json
+/results/experiment-fake-v0.2.json

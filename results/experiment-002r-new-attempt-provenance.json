@@ -1,0 +1,312 @@
+{
+  "autonomy_levels": [
+    "A1",
+    "A2",
+    "A3"
+  ],
+  "bluerange_version": "0.1.0",
+  "budgets": {
+    "investigation_calls": 8,
+    "model_turns": 12,
+    "response_actions": 2
+  },
+  "control_types": [
+    "attack",
+    "benign"
+  ],
+  "defender_v2_sha256": "1edcb1b12b0d3ef1463c1330015fb127409c76e311323879545297826dfa9fe4",
+  "evidence_profiles": [
+    "COMPLETE",
+    "AMBIGUOUS"
+  ],
+  "expected_run_count": 24,
+  "experiment_id": "experiment-002r-new-attempt",
+  "formal_call_chain": [
+    "run_formal",
+    "execute_002r_formal_batch",
+    "run_experiment_v2_cell"
+  ],
+  "fresh_canary": {
+    "path": "results/experiment-002r-canary-2.json",
+    "sha256": "5b7c60d2399481d684f86a5df21f2b1f572f37cbe39a3d2488bf08ccb326d16c"
+  },
+  "git_commit": "01479fe5a6c001fe3a215ed63d8a03e9d9d1aba7",
+  "model": "qwen3:14b-q4_K_M",
+  "model_parameters": {
+    "model_seed": 17,
+    "output_mode": "JSON_OBJECT",
+    "temperature": 0.2,
+    "timeout_seconds": 600,
+    "top_p": 0.9
+  },
+  "ollama_version": "ollama version is 0.31.1",
+  "ordered_matrix": [
+    {
+      "autonomy": "A1",
+      "evidence_profile": "COMPLETE",
+      "kind": "attack",
+      "ordinal": 1,
+      "run_id": "run-000001",
+      "seed": 101
+    },
+    {
+      "autonomy": "A1",
+      "evidence_profile": "COMPLETE",
+      "kind": "benign",
+      "ordinal": 2,
+      "run_id": "run-000002",
+      "seed": 101
+    },
+    {
+      "autonomy": "A1",
+      "evidence_profile": "COMPLETE",
+      "kind": "attack",
+      "ordinal": 3,
+      "run_id": "run-000003",
+      "seed": 202
+    },
+    {
+      "autonomy": "A1",
+      "evidence_profile": "COMPLETE",
+      "kind": "benign",
+      "ordinal": 4,
+      "run_id": "run-000004",
+      "seed": 202
+    },
+    {
+      "autonomy": "A1",
+      "evidence_profile": "AMBIGUOUS",
+      "kind": "attack",
+      "ordinal": 5,
+      "run_id": "run-000005",
+      "seed": 101
+    },
+    {
+      "autonomy": "A1",
+      "evidence_profile": "AMBIGUOUS",
+      "kind": "benign",
+      "ordinal": 6,
+      "run_id": "run-000006",
+      "seed": 101
+    },
+    {
+      "autonomy": "A1",
+      "evidence_profile": "AMBIGUOUS",
+      "kind": "attack",
+      "ordinal": 7,
+      "run_id": "run-000007",
+      "seed": 202
+    },
+    {
+      "autonomy": "A1",
+      "evidence_profile": "AMBIGUOUS",
+      "kind": "benign",
+      "ordinal": 8,
+      "run_id": "run-000008",
+      "seed": 202
+    },
+    {
+      "autonomy": "A2",
+      "evidence_profile": "COMPLETE",
+      "kind": "attack",
+      "ordinal": 9,
+      "run_id": "run-000009",
+      "seed": 101
+    },
+    {
+      "autonomy": "A2",
+      "evidence_profile": "COMPLETE",
+      "kind": "benign",
+      "ordinal": 10,
+      "run_id": "run-000010",
+      "seed": 101
+    },
+    {
+      "autonomy": "A2",
+      "evidence_profile": "COMPLETE",
+      "kind": "attack",
+      "ordinal": 11,
+      "run_id": "run-000011",
+      "seed": 202
+    },
+    {
+      "autonomy": "A2",
+      "evidence_profile": "COMPLETE",
+      "kind": "benign",
+      "ordinal": 12,
+      "run_id": "run-000012",
+      "seed": 202
+    },
+    {
+      "autonomy": "A2",
+      "evidence_profile": "AMBIGUOUS",
+      "kind": "attack",
+      "ordinal": 13,
+      "run_id": "run-000013",
+      "seed": 101
+    },
+    {
+      "autonomy": "A2",
+      "evidence_profile": "AMBIGUOUS",
+      "kind": "benign",
+      "ordinal": 14,
+      "run_id": "run-000014",
+      "seed": 101
+    },
+    {
+      "autonomy": "A2",
+      "evidence_profile": "AMBIGUOUS",
+      "kind": "attack",
+      "ordinal": 15,
+      "run_id": "run-000015",
+      "seed": 202
+    },
+    {
+      "autonomy": "A2",
+      "evidence_profile": "AMBIGUOUS",
+      "kind": "benign",
+      "ordinal": 16,
+      "run_id": "run-000016",
+      "seed": 202
+    },
+    {
+      "autonomy": "A3",
+      "evidence_profile": "COMPLETE",
+      "kind": "attack",
+      "ordinal": 17,
+      "run_id": "run-000017",
+      "seed": 101
+    },
+    {
+      "autonomy": "A3",
+      "evidence_profile": "COMPLETE",
+      "kind": "benign",
+      "ordinal": 18,
+      "run_id": "run-000018",
+      "seed": 101
+    },
+    {
+      "autonomy": "A3",
+      "evidence_profile": "COMPLETE",
+      "kind": "attack",
+      "ordinal": 19,
+      "run_id": "run-000019",
+      "seed": 202
+    },
+    {
+      "autonomy": "A3",
+      "evidence_profile": "COMPLETE",
+      "kind": "benign",
+      "ordinal": 20,
+      "run_id": "run-000020",
+      "seed": 202
+    },
+    {
+      "autonomy": "A3",
+      "evidence_profile": "AMBIGUOUS",
+      "kind": "attack",
+      "ordinal": 21,
+      "run_id": "run-000021",
+      "seed": 101
+    },
+    {
+      "autonomy": "A3",
+      "evidence_profile": "AMBIGUOUS",
+      "kind": "benign",
+      "ordinal": 22,
+      "run_id": "run-000022",
+      "seed": 101
+    },
+    {
+      "autonomy": "A3",
+      "evidence_profile": "AMBIGUOUS",
+      "kind": "attack",
+      "ordinal": 23,
+      "run_id": "run-000023",
+      "seed": 202
+    },
+    {
+      "autonomy": "A3",
+      "evidence_profile": "AMBIGUOUS",
+      "kind": "benign",
+      "ordinal": 24,
+      "run_id": "run-000024",
+      "seed": 202
+    }
+  ],
+  "pre_experiment_audit": {
+    "path": "docs/pre-experiment-reliability-audit.md",
+    "sha256": "750d371ae4a469547803d4fdd38590d49a4cb8c61d341a3f9bde8704ac8229af",
+    "verdict": "SAFE_FOR_FORMAL_EXPERIMENT"
+  },
+  "provider": "ollama",
+  "provider_base_url": "http://localhost:11434/v1",
+  "recorded_at": "2026-09-01T02:12:28.113597+00:00",
+  "runtime_version": "3.12.14",
+  "scenario_hash": "e87b96dc51d302ef36662a4f5bbd96978494e82ab42a3326cf5c86fd2c07148c",
+  "scenario_seeds": [
+    101,
+    202
+  ],
+  "scenario_version": "1.1",
+  "schema_version": "experiment-002r-new-attempt-provenance-v1",
+  "working_tree_status_porcelain": [
+    "M README.md",
+    " M bluerange/agents/base.py",
+    " M bluerange/cli.py",
+    " D bluerange/models.py",
+    "?? EXPERIMENT_001_SPEC.md",
+    "?? EXPERIMENT_002R_SPEC.md",
+    "?? EXPERIMENT_002_SPEC.md",
+    "?? PROTOCOL_CONFORMANCE_SPEC.md",
+    "?? RUNTIME_RELIABILITY_FINAL_GATE_FIX.md",
+    "?? RUNTIME_RELIABILITY_INTEGRATION_FIX_SPEC.md",
+    "?? RUNTIME_RELIABILITY_REPAIR_SPEC.md",
+    "?? V02_BUILD_SPEC.md",
+    "?? V02_CORRECTIVE_SPEC.md",
+    "?? V02_FINAL_FIX_SPEC.md",
+    "?? bluerange/agents/llm_agent.py",
+    "?? bluerange/experiment.py",
+    "?? bluerange/experiment001.py",
+    "?? bluerange/experiment002.py",
+    "?? bluerange/experiment002r.py",
+    "?? bluerange/formal_batch.py",
+    "?? bluerange/models/",
+    "?? bluerange/protocol_canary.py",
+    "?? bluerange/protocol_conformance.py",
+    "?? docs/AUTONOMY_MODEL.md",
+    "?? docs/LLM_AGENT_RUNTIME.md",
+    "?? docs/experiment-001-failure-analysis.md",
+    "?? docs/experiment-001-smoke.md",
+    "?? docs/experiment-001-vs-002.md",
+    "?? docs/experiment-001-vs-002r-formal.md",
+    "?? docs/experiment-001-vs-002r.md",
+    "?? docs/experiment-002-smoke.md",
+    "?? docs/experiment-002r-formal.md",
+    "?? docs/experiment-002r-smoke.md",
+    "?? docs/pre-experiment-reliability-audit.md",
+    "?? docs/protocol-conformance-v2.md",
+    "?? docs/runtime-reliability-repair-002r.md",
+    "?? prompts/",
+    "?? results/experiment-001-smoke.json",
+    "?? results/experiment-002-smoke.json",
+    "?? results/experiment-002r-canary-2.json",
+    "?? results/experiment-002r-canary.json",
+    "?? results/experiment-002r-formal.json",
+    "?? results/experiment-002r-smoke.json",
+    "?? results/experiment-fake-v0.2.json",
+    "?? results/protocol-conformance-v2.json",
+    "?? results/provider-check-002r.json",
+    "?? results/runtime-reliability-repair-002r.json",
+    "?? tests/unit/test_experiment001.py",
+    "?? tests/unit/test_experiment002.py",
+    "?? tests/unit/test_experiment002r.py",
+    "?? tests/unit/test_formal_batch.py",
+    "?? tests/unit/test_pre_experiment_reliability_audit.py",
+    "?? tests/unit/test_protocol_conformance.py",
+    "?? tests/unit/test_runtime_reliability.py",
+    "?? tests/unit/test_runtime_reliability_v2_integration.py",
+    "?? tests/unit/test_v02_runtime.py",
+    "?? uv.lock"
+  ]
+}
