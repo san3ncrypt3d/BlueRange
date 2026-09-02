@@ -1,14 +1,14 @@
 """Actual v2/002R-path reliability regressions using deterministic fakes."""
 
+import hashlib
 import inspect
 import json
-import shutil
 from pathlib import Path
 from typing import Any
 
 import pytest
 
-from bluerange.experiment002 import V2Run, run_experiment_v2_cell
+from bluerange.experiment002 import MODEL, V2Run, run_experiment_v2_cell
 from bluerange.experiment002r import (
     _formal_manifest,
     _verify_formal_canary,
@@ -166,9 +166,30 @@ def test_formal_execution_cannot_start_with_old_failed_canary(
     assert not started
 
 
-def test_formal_pre_run_gate_accepts_only_exact_frozen_fresh_canary(tmp_path: Path) -> None:
+def _bounded_canary_gate_fixture() -> dict[str, Any]:
+    """Return only the immutable gate controls, never historical raw model output."""
+    import bluerange.experiment002r as experiment002r
+
+    return {
+        "schema_version": experiment002r.FRESH_CANARY_SCHEMA,
+        "provider": "ollama",
+        "model": MODEL,
+        "parameters": experiment002r.FRESH_CANARY_PARAMETERS,
+        "gates": experiment002r.FRESH_CANARY_GATES,
+        "canary_passed": True,
+    }
+
+
+def test_formal_pre_run_gate_accepts_only_exact_frozen_fresh_canary(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    import bluerange.experiment002r as experiment002r
+
     copied = tmp_path / "canary.json"
-    shutil.copyfile("results/experiment-002r-canary-2.json", copied)
+    copied.write_text(json.dumps(_bounded_canary_gate_fixture()), encoding="utf-8")
+    monkeypatch.setattr(
+        experiment002r, "FRESH_CANARY_SHA256", hashlib.sha256(copied.read_bytes()).hexdigest()
+    )
 
     _verify_formal_canary(copied)
 
@@ -184,9 +205,15 @@ def test_formal_pre_run_gate_accepts_only_exact_frozen_fresh_canary(tmp_path: Pa
     ],
 )
 def test_formal_pre_run_gate_fails_closed_for_altered_fresh_canary(
-    tmp_path: Path, field: str, value: Any
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, field: str, value: Any
 ) -> None:
-    altered = json.loads(Path("results/experiment-002r-canary-2.json").read_text())
+    import bluerange.experiment002r as experiment002r
+
+    original = json.dumps(_bounded_canary_gate_fixture()).encode()
+    monkeypatch.setattr(
+        experiment002r, "FRESH_CANARY_SHA256", hashlib.sha256(original).hexdigest()
+    )
+    altered = json.loads(original)
     altered[field] = value
     path = tmp_path / "altered-canary.json"
     path.write_text(json.dumps(altered), encoding="utf-8")

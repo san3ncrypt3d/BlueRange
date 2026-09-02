@@ -1,0 +1,412 @@
+{
+  "artifact_classification": "SANITIZED / DERIVED",
+  "canonical_relationship": "This index is not canonical raw evidence. It records hashes of exact canonical raw artifacts and points to bounded public derivatives.",
+  "entries": [
+    {
+      "canonical_raw_sha256": "cd3b8308e3771f463ec364558008bb8f9d66e30ea467a293ae361a017f7f0958",
+      "original_public_path": "results/experiment-001-smoke.json",
+      "originating_experiment": "experiment-001",
+      "originating_run": null,
+      "public_derivative_references": [
+        "docs/experiment-001-smoke.md",
+        "docs/experiment-001-failure-analysis.md"
+      ],
+      "raw_evidence_classification": "RESTRICTED_CANONICAL_RAW_EVIDENCE"
+    },
+    {
+      "canonical_raw_sha256": "5b7c60d2399481d684f86a5df21f2b1f572f37cbe39a3d2488bf08ccb326d16c",
+      "original_public_path": "results/experiment-002r-canary-2.json",
+      "originating_experiment": "experiment-002r",
+      "originating_run": null,
+      "public_derivative_references": [
+        "docs/experiment-002r-smoke.md",
+        "docs/runtime-reliability-repair-002r.md",
+        "results/provider-check-002r.json"
+      ],
+      "raw_evidence_classification": "RESTRICTED_CANONICAL_RAW_EVIDENCE"
+    },
+    {
+      "canonical_raw_sha256": "ed7e0b001a00aab064a19e5c337a35557a1e7bc88db36139e3536a70bfc27521",
+      "original_public_path": "results/experiment-002r-canary.json",
+      "originating_experiment": "experiment-002r",
+      "originating_run": null,
+      "public_derivative_references": [
+        "docs/experiment-002r-smoke.md",
+        "docs/runtime-reliability-repair-002r.md",
+        "results/provider-check-002r.json"
+      ],
+      "raw_evidence_classification": "RESTRICTED_CANONICAL_RAW_EVIDENCE"
+    },
+    {
+      "canonical_raw_sha256": "a8ca0f6ce0587a56dd3c7623b52f8cc510fa83e26640a707d7bd91822d04c831",
+      "original_public_path": "results/formal-batches/experiment-002r-new-attempt/aggregate.json",
+      "originating_experiment": "experiment-002r-new-attempt",
+      "originating_run": null,
+      "public_derivative_references": [
+        "results/formal-batches/experiment-002r-new-attempt/manifest.json",
+        "results/formal-batches/experiment-002r-new-attempt/status.json",
+        "results/experiment-002r-new-attempt-provenance.json",
+        "results/experiment-002r-new-attempt-analysis.json",
+        "docs/experiment-002r-new-attempt-formal.md"
+      ],
+      "raw_evidence_classification": "RESTRICTED_CANONICAL_RAW_EVIDENCE"
+    },
+    {
+      "canonical_raw_sha256": "08e61a3243caa5e94725e2b3afd9f5c6b90cabda5086f457ffb814388d0f9360",
+      "original_public_path": "results/formal-batches/experiment-002r-new-attempt/runs/run-000001.json",
+      "originating_experiment": "experiment-002r-new-attempt",
+      "originating_run": "run-000001",
+      "public_derivative_references": [
+        "results/formal-batches/experiment-002r-new-attempt/manifest.json",
+        "results/formal-batches/experiment-002r-new-attempt/status.json",
+        "results/experiment-002r-new-attempt-provenance.json",
+        "results/experiment-002r-new-attempt-analysis.json",
+        "docs/experiment-002r-new-attempt-formal.md"
+      ],
+      "raw_evidence_classification": "RESTRICTED_CANONICAL_RAW_EVIDENCE"
+    },
+    {
+      "canonical_raw_sha256": "69dabab4422861f6fb0f048bcfc0e2a88230718db3754f859d07c0f9e407ff69",
+      "original_public_path": "results/formal-batches/experiment-002r-new-attempt/runs/run-000002.json",
+      "originating_experiment": "experiment-002r-new-attempt",
+      "originating_run": "run-000002",
+      "public_derivative_references": [
+        "results/formal-batches/experiment-002r-new-attempt/manifest.json",
+        "results/formal-batches/experiment-002r-new-attempt/status.json",
+        "results/experiment-002r-new-attempt-provenance.json",
+        "results/experiment-002r-new-attempt-analysis.json",
+        "docs/experiment-002r-new-attempt-formal.md"
+      ],
+      "raw_evidence_classification": "RESTRICTED_CANONICAL_RAW_EVIDENCE"
+    },
+    {
+      "canonical_raw_sha256": "361b4cff698f5b709d4142780cd1c4c849b463c73a6431bd9012330651ec2d5f",
+      "original_public_path": "results/formal-batches/experiment-002r-new-attempt/runs/run-000003.json",
+      "originating_experiment": "experiment-002r-new-attempt",
+      "originating_run": "run-000003",
+      "public_derivative_references": [
+        "results/formal-batches/experiment-002r-new-attempt/manifest.json",
+        "results/formal-batches/experiment-002r-new-attempt/status.json",
+        "results/experiment-002r-new-attempt-provenance.json",
+        "results/experiment-002r-new-attempt-analysis.json",
+        "docs/experiment-002r-new-attempt-formal.md"
+      ],
+      "raw_evidence_classification": "RESTRICTED_CANONICAL_RAW_EVIDENCE"
+    },
+    {
+      "canonical_raw_sha256": "f524d912ab324cfc29a44a7546d831a407477c42ba145132ab1c39c736e583b7",
+      "original_public_path": "results/formal-batches/experiment-002r-new-attempt/runs/run-000004.json",
+      "originating_experiment": "experiment-002r-new-attempt",
+      "originating_run": "run-000004",
+      "public_derivative_references": [
+        "results/formal-batches/experiment-002r-new-attempt/manifest.json",
+        "results/formal-batches/experiment-002r-new-attempt/status.json",
+        "results/experiment-002r-new-attempt-provenance.json",
+        "results/experiment-002r-new-attempt-analysis.json",
+        "docs/experiment-002r-new-attempt-formal.md"
+      ],
+      "raw_evidence_classification": "RESTRICTED_CANONICAL_RAW_EVIDENCE"
+    },
+    {
+      "canonical_raw_sha256": "ec98f5fd982b930f143a894ccc36f7f9a10789da9648279a0423cf0bd9a49131",
+      "original_public_path": "results/formal-batches/experiment-002r-new-attempt/runs/run-000005.json",
+      "originating_experiment": "experiment-002r-new-attempt",
+      "originating_run": "run-000005",
+      "public_derivative_references": [
+        "results/formal-batches/experiment-002r-new-attempt/manifest.json",
+        "results/formal-batches/experiment-002r-new-attempt/status.json",
+        "results/experiment-002r-new-attempt-provenance.json",
+        "results/experiment-002r-new-attempt-analysis.json",
+        "docs/experiment-002r-new-attempt-formal.md"
+      ],
+      "raw_evidence_classification": "RESTRICTED_CANONICAL_RAW_EVIDENCE"
+    },
+    {
+      "canonical_raw_sha256": "92406257434622fa969a567b2a9ae92be890e477281745e095f0d2417445bd91",
+      "original_public_path": "results/formal-batches/experiment-002r-new-attempt/runs/run-000006.json",
+      "originating_experiment": "experiment-002r-new-attempt",
+      "originating_run": "run-000006",
+      "public_derivative_references": [
+        "results/formal-batches/experiment-002r-new-attempt/manifest.json",
+        "results/formal-batches/experiment-002r-new-attempt/status.json",
+        "results/experiment-002r-new-attempt-provenance.json",
+        "results/experiment-002r-new-attempt-analysis.json",
+        "docs/experiment-002r-new-attempt-formal.md"
+      ],
+      "raw_evidence_classification": "RESTRICTED_CANONICAL_RAW_EVIDENCE"
+    },
+    {
+      "canonical_raw_sha256": "f922abf0afdd7839425324a93a164b6bb40ccc5203053ba3f26a2f4a93bd836a",
+      "original_public_path": "results/formal-batches/experiment-002r-new-attempt/runs/run-000007.json",
+      "originating_experiment": "experiment-002r-new-attempt",
+      "originating_run": "run-000007",
+      "public_derivative_references": [
+        "results/formal-batches/experiment-002r-new-attempt/manifest.json",
+        "results/formal-batches/experiment-002r-new-attempt/status.json",
+        "results/experiment-002r-new-attempt-provenance.json",
+        "results/experiment-002r-new-attempt-analysis.json",
+        "docs/experiment-002r-new-attempt-formal.md"
+      ],
+      "raw_evidence_classification": "RESTRICTED_CANONICAL_RAW_EVIDENCE"
+    },
+    {
+      "canonical_raw_sha256": "78a051290c3d6be91e78f99efe58c5b6f84f6f2298189a3c89a5153560368f0d",
+      "original_public_path": "results/formal-batches/experiment-002r-new-attempt/runs/run-000008.json",
+      "originating_experiment": "experiment-002r-new-attempt",
+      "originating_run": "run-000008",
+      "public_derivative_references": [
+        "results/formal-batches/experiment-002r-new-attempt/manifest.json",
+        "results/formal-batches/experiment-002r-new-attempt/status.json",
+        "results/experiment-002r-new-attempt-provenance.json",
+        "results/experiment-002r-new-attempt-analysis.json",
+        "docs/experiment-002r-new-attempt-formal.md"
+      ],
+      "raw_evidence_classification": "RESTRICTED_CANONICAL_RAW_EVIDENCE"
+    },
+    {
+      "canonical_raw_sha256": "f918d4c4e84266ffc01058b516608e28f2aaa948d1e0f1b8116b6d4c2f554b94",
+      "original_public_path": "results/formal-batches/experiment-002r-new-attempt/runs/run-000009.json",
+      "originating_experiment": "experiment-002r-new-attempt",
+      "originating_run": "run-000009",
+      "public_derivative_references": [
+        "results/formal-batches/experiment-002r-new-attempt/manifest.json",
+        "results/formal-batches/experiment-002r-new-attempt/status.json",
+        "results/experiment-002r-new-attempt-provenance.json",
+        "results/experiment-002r-new-attempt-analysis.json",
+        "docs/experiment-002r-new-attempt-formal.md"
+      ],
+      "raw_evidence_classification": "RESTRICTED_CANONICAL_RAW_EVIDENCE"
+    },
+    {
+      "canonical_raw_sha256": "6847d55e9de399e81fd810e92ab86030b3cc06869c5601ac570a890ceabd04d2",
+      "original_public_path": "results/formal-batches/experiment-002r-new-attempt/runs/run-000010.json",
+      "originating_experiment": "experiment-002r-new-attempt",
+      "originating_run": "run-000010",
+      "public_derivative_references": [
+        "results/formal-batches/experiment-002r-new-attempt/manifest.json",
+        "results/formal-batches/experiment-002r-new-attempt/status.json",
+        "results/experiment-002r-new-attempt-provenance.json",
+        "results/experiment-002r-new-attempt-analysis.json",
+        "docs/experiment-002r-new-attempt-formal.md"
+      ],
+      "raw_evidence_classification": "RESTRICTED_CANONICAL_RAW_EVIDENCE"
+    },
+    {
+      "canonical_raw_sha256": "1470770d87b1c00765b94760e817db842152155b3ed4132443dc18a5d8195db2",
+      "original_public_path": "results/formal-batches/experiment-002r-new-attempt/runs/run-000011.json",
+      "originating_experiment": "experiment-002r-new-attempt",
+      "originating_run": "run-000011",
+      "public_derivative_references": [
+        "results/formal-batches/experiment-002r-new-attempt/manifest.json",
+        "results/formal-batches/experiment-002r-new-attempt/status.json",
+        "results/experiment-002r-new-attempt-provenance.json",
+        "results/experiment-002r-new-attempt-analysis.json",
+        "docs/experiment-002r-new-attempt-formal.md"
+      ],
+      "raw_evidence_classification": "RESTRICTED_CANONICAL_RAW_EVIDENCE"
+    },
+    {
+      "canonical_raw_sha256": "42f7e09727fe1aaa098c129ef9a85ab61ff82b7d21e1400d2bf0033940a2a093",
+      "original_public_path": "results/formal-batches/experiment-002r-new-attempt/runs/run-000012.json",
+      "originating_experiment": "experiment-002r-new-attempt",
+      "originating_run": "run-000012",
+      "public_derivative_references": [
+        "results/formal-batches/experiment-002r-new-attempt/manifest.json",
+        "results/formal-batches/experiment-002r-new-attempt/status.json",
+        "results/experiment-002r-new-attempt-provenance.json",
+        "results/experiment-002r-new-attempt-analysis.json",
+        "docs/experiment-002r-new-attempt-formal.md"
+      ],
+      "raw_evidence_classification": "RESTRICTED_CANONICAL_RAW_EVIDENCE"
+    },
+    {
+      "canonical_raw_sha256": "0af59431e4a2bc3fa7525c440c32968a11a04f32da6dd42978d044e274e0bc31",
+      "original_public_path": "results/formal-batches/experiment-002r-new-attempt/runs/run-000013.json",
+      "originating_experiment": "experiment-002r-new-attempt",
+      "originating_run": "run-000013",
+      "public_derivative_references": [
+        "results/formal-batches/experiment-002r-new-attempt/manifest.json",
+        "results/formal-batches/experiment-002r-new-attempt/status.json",
+        "results/experiment-002r-new-attempt-provenance.json",
+        "results/experiment-002r-new-attempt-analysis.json",
+        "docs/experiment-002r-new-attempt-formal.md"
+      ],
+      "raw_evidence_classification": "RESTRICTED_CANONICAL_RAW_EVIDENCE"
+    },
+    {
+      "canonical_raw_sha256": "2683625603cce04bb645b3fbd978256c3388aa667a469950b46e1d81436a6af3",
+      "original_public_path": "results/formal-batches/experiment-002r-new-attempt/runs/run-000014.json",
+      "originating_experiment": "experiment-002r-new-attempt",
+      "originating_run": "run-000014",
+      "public_derivative_references": [
+        "results/formal-batches/experiment-002r-new-attempt/manifest.json",
+        "results/formal-batches/experiment-002r-new-attempt/status.json",
+        "results/experiment-002r-new-attempt-provenance.json",
+        "results/experiment-002r-new-attempt-analysis.json",
+        "docs/experiment-002r-new-attempt-formal.md"
+      ],
+      "raw_evidence_classification": "RESTRICTED_CANONICAL_RAW_EVIDENCE"
+    },
+    {
+      "canonical_raw_sha256": "663dd5620cd391951960f6f8783e9616b4d4d1b500b4540828a2b70fd0f0430a",
+      "original_public_path": "results/formal-batches/experiment-002r-new-attempt/runs/run-000015.json",
+      "originating_experiment": "experiment-002r-new-attempt",
+      "originating_run": "run-000015",
+      "public_derivative_references": [
+        "results/formal-batches/experiment-002r-new-attempt/manifest.json",
+        "results/formal-batches/experiment-002r-new-attempt/status.json",
+        "results/experiment-002r-new-attempt-provenance.json",
+        "results/experiment-002r-new-attempt-analysis.json",
+        "docs/experiment-002r-new-attempt-formal.md"
+      ],
+      "raw_evidence_classification": "RESTRICTED_CANONICAL_RAW_EVIDENCE"
+    },
+    {
+      "canonical_raw_sha256": "766a5522674f13f6f1725f833786ea900ad6f696246e45219e7364c63abb8cad",
+      "original_public_path": "results/formal-batches/experiment-002r-new-attempt/runs/run-000016.json",
+      "originating_experiment": "experiment-002r-new-attempt",
+      "originating_run": "run-000016",
+      "public_derivative_references": [
+        "results/formal-batches/experiment-002r-new-attempt/manifest.json",
+        "results/formal-batches/experiment-002r-new-attempt/status.json",
+        "results/experiment-002r-new-attempt-provenance.json",
+        "results/experiment-002r-new-attempt-analysis.json",
+        "docs/experiment-002r-new-attempt-formal.md"
+      ],
+      "raw_evidence_classification": "RESTRICTED_CANONICAL_RAW_EVIDENCE"
+    },
+    {
+      "canonical_raw_sha256": "d7f585e72c78d6af942e2ccf3dadbc3b11942dc618bd029aefff2496ef4d3a26",
+      "original_public_path": "results/formal-batches/experiment-002r-new-attempt/runs/run-000017.json",
+      "originating_experiment": "experiment-002r-new-attempt",
+      "originating_run": "run-000017",
+      "public_derivative_references": [
+        "results/formal-batches/experiment-002r-new-attempt/manifest.json",
+        "results/formal-batches/experiment-002r-new-attempt/status.json",
+        "results/experiment-002r-new-attempt-provenance.json",
+        "results/experiment-002r-new-attempt-analysis.json",
+        "docs/experiment-002r-new-attempt-formal.md"
+      ],
+      "raw_evidence_classification": "RESTRICTED_CANONICAL_RAW_EVIDENCE"
+    },
+    {
+      "canonical_raw_sha256": "e01306dc7cab67d86ef49ee600f65de63f43a0ff8772a25ec514716fd2030dfc",
+      "original_public_path": "results/formal-batches/experiment-002r-new-attempt/runs/run-000018.json",
+      "originating_experiment": "experiment-002r-new-attempt",
+      "originating_run": "run-000018",
+      "public_derivative_references": [
+        "results/formal-batches/experiment-002r-new-attempt/manifest.json",
+        "results/formal-batches/experiment-002r-new-attempt/status.json",
+        "results/experiment-002r-new-attempt-provenance.json",
+        "results/experiment-002r-new-attempt-analysis.json",
+        "docs/experiment-002r-new-attempt-formal.md"
+      ],
+      "raw_evidence_classification": "RESTRICTED_CANONICAL_RAW_EVIDENCE"
+    },
+    {
+      "canonical_raw_sha256": "5498d86b5fca7ffd2f0b0e92c2ff0b061f277dfac61def352e21ead81260d3f8",
+      "original_public_path": "results/formal-batches/experiment-002r-new-attempt/runs/run-000019.json",
+      "originating_experiment": "experiment-002r-new-attempt",
+      "originating_run": "run-000019",
+      "public_derivative_references": [
+        "results/formal-batches/experiment-002r-new-attempt/manifest.json",
+        "results/formal-batches/experiment-002r-new-attempt/status.json",
+        "results/experiment-002r-new-attempt-provenance.json",
+        "results/experiment-002r-new-attempt-analysis.json",
+        "docs/experiment-002r-new-attempt-formal.md"
+      ],
+      "raw_evidence_classification": "RESTRICTED_CANONICAL_RAW_EVIDENCE"
+    },
+    {
+      "canonical_raw_sha256": "74bbaca6e15987a2c4f85026b6c42ca34b7164f09ecc343b9c538b30ce77dc2b",
+      "original_public_path": "results/formal-batches/experiment-002r-new-attempt/runs/run-000020.json",
+      "originating_experiment": "experiment-002r-new-attempt",
+      "originating_run": "run-000020",
+      "public_derivative_references": [
+        "results/formal-batches/experiment-002r-new-attempt/manifest.json",
+        "results/formal-batches/experiment-002r-new-attempt/status.json",
+        "results/experiment-002r-new-attempt-provenance.json",
+        "results/experiment-002r-new-attempt-analysis.json",
+        "docs/experiment-002r-new-attempt-formal.md"
+      ],
+      "raw_evidence_classification": "RESTRICTED_CANONICAL_RAW_EVIDENCE"
+    },
+    {
+      "canonical_raw_sha256": "38a578d1e08e644be4ce4d906aab90bef3a782de63f2d2d24d7adbf2aa034961",
+      "original_public_path": "results/formal-batches/experiment-002r-new-attempt/runs/run-000021.json",
+      "originating_experiment": "experiment-002r-new-attempt",
+      "originating_run": "run-000021",
+      "public_derivative_references": [
+        "results/formal-batches/experiment-002r-new-attempt/manifest.json",
+        "results/formal-batches/experiment-002r-new-attempt/status.json",
+        "results/experiment-002r-new-attempt-provenance.json",
+        "results/experiment-002r-new-attempt-analysis.json",
+        "docs/experiment-002r-new-attempt-formal.md"
+      ],
+      "raw_evidence_classification": "RESTRICTED_CANONICAL_RAW_EVIDENCE"
+    },
+    {
+      "canonical_raw_sha256": "45e16ca172bdde17e65e90e6f65bb251e182339a650b92281876e09ceb827f5c",
+      "original_public_path": "results/formal-batches/experiment-002r-new-attempt/runs/run-000022.json",
+      "originating_experiment": "experiment-002r-new-attempt",
+      "originating_run": "run-000022",
+      "public_derivative_references": [
+        "results/formal-batches/experiment-002r-new-attempt/manifest.json",
+        "results/formal-batches/experiment-002r-new-attempt/status.json",
+        "results/experiment-002r-new-attempt-provenance.json",
+        "results/experiment-002r-new-attempt-analysis.json",
+        "docs/experiment-002r-new-attempt-formal.md"
+      ],
+      "raw_evidence_classification": "RESTRICTED_CANONICAL_RAW_EVIDENCE"
+    },
+    {
+      "canonical_raw_sha256": "4a0c65ba993ee8c12f06acee44f41021f3db20acd7ab4fa936b08db9c2de2bde",
+      "original_public_path": "results/formal-batches/experiment-002r-new-attempt/runs/run-000023.json",
+      "originating_experiment": "experiment-002r-new-attempt",
+      "originating_run": "run-000023",
+      "public_derivative_references": [
+        "results/formal-batches/experiment-002r-new-attempt/manifest.json",
+        "results/formal-batches/experiment-002r-new-attempt/status.json",
+        "results/experiment-002r-new-attempt-provenance.json",
+        "results/experiment-002r-new-attempt-analysis.json",
+        "docs/experiment-002r-new-attempt-formal.md"
+      ],
+      "raw_evidence_classification": "RESTRICTED_CANONICAL_RAW_EVIDENCE"
+    },
+    {
+      "canonical_raw_sha256": "ede53fbe1073e2f934560034e7f558b7936444c0529bc0f1c411723c9b2d89d2",
+      "original_public_path": "results/formal-batches/experiment-002r-new-attempt/runs/run-000024.json",
+      "originating_experiment": "experiment-002r-new-attempt",
+      "originating_run": "run-000024",
+      "public_derivative_references": [
+        "results/formal-batches/experiment-002r-new-attempt/manifest.json",
+        "results/formal-batches/experiment-002r-new-attempt/status.json",
+        "results/experiment-002r-new-attempt-provenance.json",
+        "results/experiment-002r-new-attempt-analysis.json",
+        "docs/experiment-002r-new-attempt-formal.md"
+      ],
+      "raw_evidence_classification": "RESTRICTED_CANONICAL_RAW_EVIDENCE"
+    }
+  ],
+  "sanitization_policy": {
+    "prohibitions": [
+      "no decision-contract-v1 retrofitting",
+      "no reconstruction or alteration of canonical raw artifacts"
+    ],
+    "removed": [
+      "unrestricted model input",
+      "unrestricted raw model output",
+      "raw invalid JSON",
+      "raw repair responses",
+      "private archive location"
+    ],
+    "retained": [
+      "originating experiment/run identity",
+      "original repository path",
+      "canonical raw SHA-256",
+      "bounded public derivative references"
+    ],
+    "version": "raw-evidence-public-index-v1"
+  },
+  "schema_version": "bluerange-sanitized-derived-evidence-index-v1"
+}
