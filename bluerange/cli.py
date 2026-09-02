@@ -7,11 +7,29 @@ from typing import Annotated
 import typer
 from pydantic import ValidationError
 
-from bluerange.models import BenchmarkResult
+from bluerange.experiment import fake_provider, run_experiment, save_experiment
+from bluerange.experiment002r import PREFLIGHT_PATH, provider_preflight
+from bluerange.models import AutonomyLevel, BenchmarkResult
+from bluerange.models.gateway import provider_from_config
+from bluerange.models.schemas import ExperimentResult, RuntimeBudgets
 from bluerange.orchestrator import run_benchmark, save_result
-from bluerange.scenarios import ScenarioError, load_scenario
+from bluerange.scenarios import EvidenceProfile, ScenarioError, load_scenario
 
 app = typer.Typer(no_args_is_help=True, help="Benchmark safe autonomous cyber defenders.")
+
+
+@app.command("provider-check")
+def provider_check(
+    provider: Annotated[str, typer.Option()],
+    model: Annotated[str, typer.Option()],
+    protocol: Annotated[str, typer.Option()],
+) -> None:
+    """Perform one safe real provider/protocol compatibility preflight."""
+    artifact = provider_preflight(provider, model, protocol)
+    typer.echo(f"Provider preflight: {'PASS' if artifact['passed'] else 'FAIL'}")
+    typer.echo(f"Saved: {PREFLIGHT_PATH.resolve()}")
+    if not artifact["passed"]:
+        raise typer.Exit(1)
 
 
 @app.command("list-scenarios")
@@ -76,6 +94,65 @@ def results(path: Path) -> None:
             f"  {component.category}/{component.component}: {component.awarded:g}/{component.maximum:g} — {component.reason}"
         )
     typer.echo(f"Fingerprint: {result.semantic_fingerprint}")
+
+
+@app.command()
+def experiment(
+    scenario: Annotated[str, typer.Option()] = "identity-compromise-001",
+    agent: Annotated[str, typer.Option()] = "llm",
+    model: Annotated[str, typer.Option()] = "fake-defender-v1",
+    autonomy: Annotated[str, typer.Option()] = "A1,A2,A3",
+    seeds: Annotated[str, typer.Option()] = "101,102,103,104",
+    profiles: Annotated[str, typer.Option()] = "COMPLETE",
+    output: Annotated[Path, typer.Option()] = Path("results/experiment.json"),
+    provider: Annotated[str | None, typer.Option()] = None,
+    base_url: Annotated[str | None, typer.Option()] = None,
+    timeout: Annotated[float, typer.Option()] = 30,
+    fake_model: Annotated[bool, typer.Option("--fake-model")] = False,
+    model_turns: Annotated[int, typer.Option()] = 12,
+    investigation_calls: Annotated[int, typer.Option()] = 8,
+    response_actions: Annotated[int, typer.Option()] = 2,
+) -> None:
+    """Run paired attack/control v0.2 LLM experiments."""
+    if agent != "llm":
+        raise typer.BadParameter("v0.2 experiments currently require --agent llm")
+    selected = "fake" if fake_model else provider
+    factory = (
+        (lambda: fake_provider(model))
+        if selected == "fake"
+        else (lambda: provider_from_config(selected, model, base_url, timeout))
+    )
+    result = run_experiment(
+        scenario,
+        [int(item) for item in seeds.split(",")],
+        [AutonomyLevel(item) for item in autonomy.split(",")],
+        [EvidenceProfile(item) for item in profiles.split(",")],
+        factory,
+        RuntimeBudgets(
+            model_turns=model_turns,
+            investigation_calls=investigation_calls,
+            response_actions=response_actions,
+        ),
+    )
+    save_experiment(result, output)
+    typer.echo(f"Saved experiment: {output.resolve()}")
+    typer.echo(f"Runs: {len(result.runs)}; mean score: {result.metrics.mean_score:.2f}")
+
+
+@app.command("experiment-results")
+def experiment_results(path: Path) -> None:
+    """Validate and summarize a saved v0.2 experiment envelope."""
+    try:
+        result = ExperimentResult.model_validate_json(path.read_text(encoding="utf-8"))
+    except (OSError, ValidationError, json.JSONDecodeError) as exc:
+        typer.echo(f"Invalid experiment: {exc}", err=True)
+        raise typer.Exit(1) from exc
+    typer.echo(
+        f"{result.scenario_id} | {len(result.runs)} paired runs | {result.metrics.mean_score:.2f} mean"
+    )
+    typer.echo(
+        f"Attack detection: {result.metrics.attack_detection:.3f}; benign specificity: {result.metrics.benign_specificity:.3f}"
+    )
 
 
 if __name__ == "__main__":

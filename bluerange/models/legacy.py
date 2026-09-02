@@ -1,4 +1,4 @@
-"""Shared strict, agent-safe and result models."""
+"""Frozen v0.1 strict, agent-safe, and result models."""
 
 import hashlib
 import json
@@ -223,3 +223,8 @@ class BenchmarkResult(StrictModel):
         if self.semantic_fingerprint != expected_fingerprint:
             raise ValueError("semantic fingerprint does not match result content")
         return self
+
+
+__all__ = [
+    name for name in globals() if not name.startswith("_") and name not in {"hashlib", "json"}
+]

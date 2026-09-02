@@ -9,7 +9,7 @@ description = "An open benchmark for safe autonomous cyber defence"
 readme = "README.md"
 requires-python = ">=3.12"
 license = {file = "LICENSE"}
-dependencies = ["pydantic>=2.9,<3", "typer>=0.12,<1", "PyYAML>=6,<7"]
+dependencies = ["anthropic>=0.68,<1", "pydantic>=2.9,<3", "typer>=0.12,<1", "PyYAML>=6,<7"]
 
 [project.optional-dependencies]
 dev = ["pytest>=8,<9", "ruff>=0.8", "mypy>=1.13", "types-PyYAML>=6"]
