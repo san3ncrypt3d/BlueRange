@@ -82,6 +82,11 @@ def test_formal_spec_hash_excludes_execution_timestamp_and_tracks_scientific_cha
     assert first["manifest"]["started_at"] != second["manifest"]["started_at"]
     assert first["experiment_spec_hash"] == second["experiment_spec_hash"]
     manifest = ExperimentManifest.model_validate(first["manifest"])
+    changed_git = manifest.model_copy(update={"git": manifest.git.model_copy(update={"commit": "a" * 40, "dirty": True})})
+    assert formal_experiment_spec_hash(manifest) == formal_experiment_spec_hash(changed_git)
+    assert manifest.git.commit
+    assert isinstance(manifest.git.dirty, bool)
+    assert manifest.parameters["experiment_spec_hash"] == first["experiment_spec_hash"]
     changed = manifest.model_copy(update={"model": "claude-sonnet-5-changed"})
     assert formal_experiment_spec_hash(manifest) != formal_experiment_spec_hash(changed)
     assert "started_at" not in first["experiment_spec"]

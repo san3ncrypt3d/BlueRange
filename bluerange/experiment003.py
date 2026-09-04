@@ -356,10 +356,23 @@ def formal_sonnet_cells() -> list[FormalRunCell]:
 
 
 def formal_experiment_spec(manifest: ExperimentManifest) -> dict[str, Any]:
-    """Return deterministic scientific identity, excluding execution timestamps."""
-    spec = manifest.model_dump(mode="json")
-    spec.pop("started_at", None)
-    return spec
+    """Return only deterministic scientific identity, excluding execution provenance."""
+    return {
+        "experiment_id": manifest.experiment_id,
+        "design": "Scenario #1 defender-v2 V2Decision 24-cell autonomy/profile/seed/control matrix",
+        "expected_runs": [cell.model_dump(mode="json") for cell in manifest.expected_runs],
+        "expected_count": manifest.expected_count,
+        "provider": manifest.provider,
+        "model": manifest.model,
+        "output_mode": manifest.parameters["output_mode"],
+        "supported_model_parameters": manifest.parameters["supported_model_parameters"],
+        "omitted_provider_parameters": manifest.parameters["omitted_provider_parameters"],
+        "decision_contract": manifest.decision_contract.model_dump(mode="json") if manifest.decision_contract else None,
+        "prompt_hash": manifest.prompt_hash,
+        "scenario_hash": manifest.scenario_hash,
+        "scenario_version": manifest.scenario_version,
+        "provenance_policy": manifest.provenance_policy,
+    }
 
 
 def formal_experiment_spec_hash(manifest: ExperimentManifest) -> str:
@@ -367,14 +380,23 @@ def formal_experiment_spec_hash(manifest: ExperimentManifest) -> str:
     return _hash_bytes(_canonical_bytes(formal_experiment_spec(manifest)))
 
 
-def prepare_formal_sonnet() -> dict[str, Any]:
-    """Build the formal manifest offline; this function never constructs a provider."""
-    prompt = PROMPT_PATH.read_text(encoding="utf-8")
-    cells = formal_sonnet_cells()
+def _formal_manifest_with_spec_reference(prompt: str, cells: list[FormalRunCell]) -> tuple[ExperimentManifest, str]:
     manifest = new_formal_manifest(
         experiment_id="experiment-003-sonnet", cells=cells,
         config=SONNET_CANARY_CONFIG, prompt=prompt,
     )
+    spec_hash = formal_experiment_spec_hash(manifest)
+    manifest = manifest.model_copy(update={
+        "parameters": {**manifest.parameters, "experiment_spec_hash": spec_hash}
+    })
+    return manifest, spec_hash
+
+
+def prepare_formal_sonnet() -> dict[str, Any]:
+    """Build the formal manifest offline; this function never constructs a provider."""
+    prompt = PROMPT_PATH.read_text(encoding="utf-8")
+    cells = formal_sonnet_cells()
+    manifest, spec_hash = _formal_manifest_with_spec_reference(prompt, cells)
     return {
         "schema_version": "experiment-003-formal-plan-v1",
         "formal_evidence": True, "external_call_performed": False,
@@ -395,10 +417,7 @@ def execute_formal_sonnet() -> dict[str, Any]:
     """Execute the formal matrix through the shared checkpointed V2 path."""
     prompt = PROMPT_PATH.read_text(encoding="utf-8")
     cells = formal_sonnet_cells()
-    manifest = new_formal_manifest(
-        experiment_id="experiment-003-sonnet", cells=cells,
-        config=SONNET_CANARY_CONFIG, prompt=prompt,
-    )
+    manifest, _spec_hash = _formal_manifest_with_spec_reference(prompt, cells)
     budgets = RuntimeBudgets(model_turns=12, investigation_calls=8, response_actions=2)
 
     def run_cell(cell: FormalRunCell) -> Any:
