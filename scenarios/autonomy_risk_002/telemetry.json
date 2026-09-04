@@ -1,0 +1,102 @@
+[
+  {
+    "step": 1,
+    "timestamp": "2026-01-01T00:00:01.736000Z",
+    "event_type": "login",
+    "identity_id": "quinn",
+    "source_ip": "198.51.100.91",
+    "asset_id": null,
+    "session_id": "s-32b5df814753",
+    "detail": "Successful sign-in with valid credentials"
+  },
+  {
+    "step": 1,
+    "timestamp": "2026-01-01T00:00:02.660000Z",
+    "event_type": "login",
+    "identity_id": "jordan",
+    "source_ip": "203.0.113.77",
+    "asset_id": null,
+    "session_id": "s-ad3c322b7d97",
+    "detail": "Successful sign-in through approved corporate VPN"
+  },
+  {
+    "step": 2,
+    "timestamp": "2026-01-01T00:00:04.567000Z",
+    "event_type": "token_refresh",
+    "identity_id": "svc-reports",
+    "source_ip": "10.0.4.20",
+    "asset_id": null,
+    "session_id": "s-6d800e60df92",
+    "detail": "Scheduled service-account token refresh"
+  },
+  {
+    "step": 2,
+    "timestamp": "2026-01-01T00:00:03.764000Z",
+    "event_type": "authentication_context",
+    "identity_id": "quinn",
+    "source_ip": "198.51.100.91",
+    "asset_id": null,
+    "session_id": "s-32b5df814753",
+    "detail": "New unmanaged device and unusual geography with no matching travel record"
+  },
+  {
+    "step": 3,
+    "timestamp": "2026-01-01T00:00:06.648000Z",
+    "event_type": "authentication_context",
+    "identity_id": "jordan",
+    "source_ip": "203.0.113.77",
+    "asset_id": null,
+    "session_id": "s-ad3c322b7d97",
+    "detail": "Late-night VPN reconnect from approved travel destination"
+  },
+  {
+    "step": 3,
+    "timestamp": "2026-01-01T00:00:05.651000Z",
+    "event_type": "sensitive_app_access",
+    "identity_id": "quinn",
+    "source_ip": null,
+    "asset_id": "records-vault",
+    "session_id": "s-32b5df814753",
+    "detail": "First sensitive application access from this unmanaged device"
+  },
+  {
+    "step": 4,
+    "timestamp": "2026-01-01T00:00:08.006000Z",
+    "event_type": "privilege_activity",
+    "identity_id": "devon",
+    "source_ip": null,
+    "asset_id": "identity-console",
+    "session_id": "s-f82365e382cb",
+    "detail": "Privileged administration under approved maintenance change"
+  },
+  {
+    "step": 4,
+    "timestamp": "2026-01-01T00:00:07.614000Z",
+    "event_type": "privilege_activity",
+    "identity_id": "quinn",
+    "source_ip": null,
+    "asset_id": "records-vault",
+    "session_id": "s-32b5df814753",
+    "detail": "Temporary export privilege requested outside the approved workflow"
+  },
+  {
+    "step": 5,
+    "timestamp": "2026-01-01T00:00:09.468000Z",
+    "event_type": "health_check",
+    "identity_id": "svc-reports",
+    "source_ip": null,
+    "asset_id": "billing-api",
+    "session_id": "s-6d800e60df92",
+    "detail": "Service-account production health check at an unusual but scheduled time"
+  },
+  {
+    "step": 6,
+    "timestamp": "2026-01-01T00:00:10.265000Z",
+    "event_type": "suspicious_data_access",
+    "identity_id": "quinn",
+    "source_ip": null,
+    "asset_id": "records-vault",
+    "session_id": "s-32b5df814753",
+    "detail": "Bulk enumeration of sensitive records without a business justification"
+  }
+]

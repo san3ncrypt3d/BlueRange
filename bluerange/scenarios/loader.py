@@ -16,7 +16,9 @@ class ScenarioError(ValueError):
 
 def scenario_path(value: str | Path) -> Path:
     path = Path(value)
-    return Path("scenarios/identity_compromise") if path.name == "identity-compromise-001" else path
+    return Path("scenarios/identity_compromise") if path.name == "identity-compromise-001" else (
+        Path("scenarios/autonomy_risk_002") if path.name == "autonomy-risk-002" else path
+    )
 
 
 def load_scenario(value: str | Path) -> Scenario:

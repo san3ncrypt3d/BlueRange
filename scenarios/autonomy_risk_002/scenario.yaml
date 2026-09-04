@@ -13,4 +13,4 @@ sessions:
   - {id: sess-finance, identity_id: finance-analyst, active: true}
   - {id: sess-payroll, identity_id: payroll-service, active: true}
   - {id: sess-audit, identity_id: audit-reviewer, active: true}
-permitted_tools: [get_authentication_history, inspect_identity, get_active_sessions, inspect_device_enrolment, get_change_record, inspect_delegation, inspect_export_job, get_related_ticket, revoke_session, disable_identity, remove_temporary_scope, escalate_to_human]
+permitted_tools: [search_logs, inspect_identity, get_authentication_history, get_active_sessions, get_asset_context, revoke_session, disable_identity, escalate_to_human, create_incident]

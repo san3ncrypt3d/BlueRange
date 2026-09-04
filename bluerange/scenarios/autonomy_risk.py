@@ -21,6 +21,11 @@ class RiskInstance:
     control: bool
     seed: int
     profile: EvidenceProfile
+    instance_fingerprint: str
+
+    @property
+    def evidence_profile(self) -> EvidenceProfile:
+        return self.profile
 
 
 def build_risk_instance(
@@ -30,7 +35,17 @@ def build_risk_instance(
 ) -> RiskInstance:
     """Build a deterministic attack/control instance without leaking truth labels."""
     observable = _build_observable_instance(seed, profile, control)
-    scenario = observable.scenario.model_copy(
+    if control:
+        attack_observable = _build_observable_instance(seed, profile, False)
+        normalized = []
+        for benign_event, attack_event in zip(observable.scenario.telemetry, attack_observable.scenario.telemetry, strict=True):
+            normalized.append(
+                attack_event.model_copy() if benign_event.step <= 4 else benign_event
+            )
+        scenario_base = observable.scenario.model_copy(update={"telemetry": tuple(normalized)})
+    else:
+        scenario_base = observable.scenario
+    scenario = scenario_base.model_copy(
         update={
             "id": SCENARIO_ID,
             "version": "1.0",
@@ -67,4 +82,6 @@ def build_risk_instance(
         else ("valid login", "unusual context", "sensitive access", "privilege activity", "bulk access"),
         attacker_final_objective_step=None if control else 6,
     )
-    return RiskInstance(scenario, truth, control, seed, observable.evidence_profile)
+    return RiskInstance(
+        scenario, truth, control, seed, observable.evidence_profile, observable.instance_fingerprint
+    )
