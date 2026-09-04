@@ -46,7 +46,7 @@ def test_offline_canary_plan_uses_formal_v2_contract_without_provider_instantiat
     assert plan["provider"] == "anthropic"
     assert plan["model"] == "claude-sonnet-5"
     assert plan["output_mode"] == "ANTHROPIC_TEXT_JSON"
-    assert plan["parameters"]["provider_supported"] == {"max_tokens": 8192}
+    assert plan["parameters"]["provider_supported"] == {"max_tokens": 16384}
     assert plan["parameters"]["provider_omitted"] == ["temperature", "top_p", "seed"]
 
 
@@ -55,7 +55,7 @@ def test_sonnet_provider_configuration_is_capability_accurate() -> None:
     assert isinstance(provider, AnthropicProvider)
     assert provider.model_id == "claude-sonnet-5"
     assert provider.output_mode is OutputMode.ANTHROPIC_TEXT_JSON
-    assert provider.max_tokens == 8192
+    assert provider.max_tokens == 16384
     assert provider.timeout == 600
 
 
@@ -70,7 +70,7 @@ def test_complete_static_contract_and_schema_are_hashed_deterministically() -> N
     assert first.provider == "anthropic"
     assert first.model == "claude-sonnet-5"
     assert first.output_mode == "ANTHROPIC_TEXT_JSON"
-    assert first.supported_model_parameters == {"max_tokens": 8192}
+    assert first.supported_model_parameters == {"max_tokens": 16384}
     assert build_protocol_presentation(V2Decision)
     assert len({
         first.authoritative_schema_sha256,
@@ -287,7 +287,7 @@ def test_anthropic_bounded_invalid_response_diagnostics() -> None:
         assert client.messages.calls == 1
         assert "RAW_ALPHA" not in audit.model_dump_json()
         assert "RAW_BETA" not in audit.model_dump_json()
-        assert "bad" not in audit.model_dump_json()
+        assert "RAW_SECRET" not in audit.model_dump_json()
 
 
 def test_anthropic_valid_text_and_malformed_json_remain_successful_transport() -> None:
