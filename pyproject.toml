@@ -19,6 +19,7 @@ bluerange = "bluerange.cli:app"
 
 [tool.hatch.build.targets.wheel]
 packages = ["bluerange"]
+exclude = ["scenarios/identity_compromise/ground_truth.protected.yaml"]
 
 [tool.hatch.build.targets.wheel.force-include]
 "scenarios" = "scenarios"
