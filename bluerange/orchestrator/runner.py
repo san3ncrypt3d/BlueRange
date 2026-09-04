@@ -17,6 +17,7 @@ from bluerange.models import (
 from bluerange.scenarios import EvidenceProfile, scenario_hash
 from bluerange.scenarios._evaluator import build_evaluator_instance
 from bluerange.scenarios.autonomy_risk import build_risk_instance
+from bluerange.scenarios.loader import scenario_path
 from bluerange.scoring import ScoreInput, score_run
 from bluerange.tools import ToolController
 
@@ -32,14 +33,14 @@ def run_benchmark(
     profile: EvidenceProfile | str = EvidenceProfile.COMPLETE,
     control: bool = False,
 ) -> BenchmarkResult:
-    scenario_path = Path("scenarios/identity_compromise")
+    scenario_dir = Path("scenarios/identity_compromise")
     instance = (
         build_risk_instance(seed, profile, control)
         if scenario_id == "autonomy-risk-002"
         else build_evaluator_instance(seed, profile, control)
     )
     if scenario_id == "autonomy-risk-002":
-        scenario_path = Path("scenarios/autonomy_risk_002")
+        scenario_dir = Path("scenarios/autonomy_risk_002")
     scenario = instance.scenario
     if scenario.id != scenario_id:
         raise ValueError(f"unknown scenario: {scenario_id}")
@@ -97,7 +98,7 @@ def run_benchmark(
         bluerange_version=__version__,
         scenario_id=scenario.id,
         scenario_version=scenario.version,
-        scenario_hash=scenario_hash(scenario_path),
+        scenario_hash=scenario_hash(scenario_path(scenario_dir)),
         agent_id=defender.id,
         instance_fingerprint=instance.instance_fingerprint,
         evidence_profile=instance.evidence_profile.value,

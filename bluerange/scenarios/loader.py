@@ -16,9 +16,12 @@ class ScenarioError(ValueError):
 
 def scenario_path(value: str | Path) -> Path:
     path = Path(value)
-    return Path("scenarios/identity_compromise") if path.name == "identity-compromise-001" else (
-        Path("scenarios/autonomy_risk_002") if path.name == "autonomy-risk-002" else path
-    )
+    if path.name in {"identity-compromise-001", "autonomy-risk-002", "identity_compromise", "autonomy_risk_002"}:
+        bundle = "identity_compromise" if path.name in {"identity-compromise-001", "identity_compromise"} else "autonomy_risk_002"
+        local = Path("scenarios") / bundle
+        installed = Path(__file__).resolve().parents[2] / "scenarios" / bundle
+        return local if local.exists() else installed
+    return path
 
 
 def load_scenario(value: str | Path) -> Scenario:

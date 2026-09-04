@@ -33,7 +33,15 @@ pip install -e '.[dev]'
 bluerange run --scenario identity-compromise-001 --agent baseline --autonomy A2 --seed 42 --output results/run.json
 ```
 
-A result contains provenance, typed actions, evidence, complete audited tool history, grouped category summaries, explicit penalties, detailed component awards, and a semantic fingerprint. The seed-42 baseline currently reports `Score: 93.0/100`: it contains safely, but its simple rules do not record explicit escalation judgement or provide an ideal incident narrative.
+```bash
+bluerange doctor
+bluerange list-scenarios
+bluerange benchmark --scenario autonomy-risk-002 --autonomy A2 --seed 101 --output results/scenario-002.json
+bluerange report results/scenario-002.json
+```
+
+Scenario 2 is a deterministic attack/control pair: the initial suspicious observations are comparable, while legitimate context is discoverable only through later investigation. The control must not be contained prematurely; the attack must be contained. Use `--control` to run the benign variant.
+
 
 ## Autonomy
 

@@ -20,6 +20,9 @@ bluerange = "bluerange.cli:app"
 [tool.hatch.build.targets.wheel]
 packages = ["bluerange"]
 
+[tool.hatch.build.targets.wheel.force-include]
+"scenarios" = "scenarios"
+
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 addopts = "-q"
