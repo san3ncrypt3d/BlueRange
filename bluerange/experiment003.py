@@ -14,6 +14,7 @@ from typing import Any, Literal
 from pydantic import Field, model_validator
 
 from bluerange.experiment002 import V2Decision, V2Run, run_experiment_v2_cell
+from bluerange.experiment002r import execute_002r_formal_batch, formal_outcome_or_fail
 from bluerange.formal_batch import (
     DecisionContractProvenance,
     ExperimentManifest,
@@ -337,16 +338,90 @@ def new_formal_manifest(
     )
 
 
+def formal_sonnet_cells() -> list[FormalRunCell]:
+    """Return the exact 24-cell matrix matched to historical Experiment 002R."""
+    cells: list[FormalRunCell] = []
+    ordinal = 0
+    for autonomy in (AutonomyLevel.A1, AutonomyLevel.A2, AutonomyLevel.A3):
+        for profile in (EvidenceProfile.COMPLETE, EvidenceProfile.AMBIGUOUS):
+            for seed in (101, 202):
+                for control in (False, True):
+                    ordinal += 1
+                    cells.append(FormalRunCell(
+                        run_id=f"sonnet-003-{ordinal:06d}", seed=seed,
+                        profile=profile.value, autonomy=autonomy,
+                        kind="benign" if control else "attack",
+                    ))
+    return cells
+
+
+def prepare_formal_sonnet() -> dict[str, Any]:
+    """Build the formal manifest offline; this function never constructs a provider."""
+    prompt = PROMPT_PATH.read_text(encoding="utf-8")
+    cells = formal_sonnet_cells()
+    manifest = new_formal_manifest(
+        experiment_id="experiment-003-sonnet", cells=cells,
+        config=SONNET_CANARY_CONFIG, prompt=prompt,
+    )
+    return {
+        "schema_version": "experiment-003-formal-plan-v1",
+        "formal_evidence": True, "external_call_performed": False,
+        "matrix": [cell.model_dump(mode="json") for cell in cells],
+        "manifest": manifest.model_dump(mode="json"),
+        "execution_command": "uv run python -m bluerange.experiment003 --execute-formal",
+        "provider_methodological_difference": (
+            "Anthropic uses ordinary Messages text JSON transport with max_tokens only; "
+            "temperature, top_p, and seed are omitted because unsupported, while V2 "
+            "semantics, lifecycle, tools, autonomy, evaluation, and scoring remain frozen."
+        ),
+    }
+
+
+def execute_formal_sonnet() -> dict[str, Any]:
+    """Execute the formal matrix through the shared checkpointed V2 path."""
+    prompt = PROMPT_PATH.read_text(encoding="utf-8")
+    cells = formal_sonnet_cells()
+    manifest = new_formal_manifest(
+        experiment_id="experiment-003-sonnet", cells=cells,
+        config=SONNET_CANARY_CONFIG, prompt=prompt,
+    )
+    budgets = RuntimeBudgets(model_turns=12, investigation_calls=8, response_actions=2)
+
+    def run_cell(cell: FormalRunCell) -> Any:
+        run = run_experiment_v2_cell(
+            scenario_id="identity-compromise-001", seed=cell.seed,
+            autonomy=cell.autonomy, profile=EvidenceProfile(cell.profile),
+            control=cell.kind == "benign", run_id=cell.run_id,
+            provider_factory=provider_factory(SONNET_CANARY_CONFIG), budgets=budgets,
+            prompt=prompt, temperature=SONNET_CANARY_CONFIG.temperature,
+            top_p=SONNET_CANARY_CONFIG.top_p, model_seed=SONNET_CANARY_CONFIG.model_seed,
+            request_timeout=SONNET_CANARY_CONFIG.timeout_seconds,
+        )
+        return formal_outcome_or_fail(cell, run)
+
+    batch = execute_002r_formal_batch(Path("results/formal-batches"), manifest, run_cell)
+    aggregate = batch.read_aggregate()
+    if aggregate is None:
+        raise SystemExit("formal Sonnet batch aborted")
+    return aggregate
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     stage = parser.add_mutually_exclusive_group(required=True)
     stage.add_argument("--prepare-canary", action="store_true")
     stage.add_argument("--execute-canary", action="store_true")
+    stage.add_argument("--prepare-formal", action="store_true")
+    stage.add_argument("--execute-formal", action="store_true")
     args = parser.parse_args()
     if args.prepare_canary:
         print(json.dumps(prepare_sonnet_canary(), indent=2, sort_keys=True))
-        return
-    run_sonnet_canary()
+    elif args.prepare_formal:
+        print(json.dumps(prepare_formal_sonnet(), indent=2, sort_keys=True))
+    elif args.execute_formal:
+        execute_formal_sonnet()
+    else:
+        run_sonnet_canary()
 
 
 if __name__ == "__main__":
