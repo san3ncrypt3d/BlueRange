@@ -355,6 +355,18 @@ def formal_sonnet_cells() -> list[FormalRunCell]:
     return cells
 
 
+def formal_experiment_spec(manifest: ExperimentManifest) -> dict[str, Any]:
+    """Return deterministic scientific identity, excluding execution timestamps."""
+    spec = manifest.model_dump(mode="json")
+    spec.pop("started_at", None)
+    return spec
+
+
+def formal_experiment_spec_hash(manifest: ExperimentManifest) -> str:
+    """Hash canonical static experiment identity, never volatile execution metadata."""
+    return _hash_bytes(_canonical_bytes(formal_experiment_spec(manifest)))
+
+
 def prepare_formal_sonnet() -> dict[str, Any]:
     """Build the formal manifest offline; this function never constructs a provider."""
     prompt = PROMPT_PATH.read_text(encoding="utf-8")
@@ -366,6 +378,8 @@ def prepare_formal_sonnet() -> dict[str, Any]:
     return {
         "schema_version": "experiment-003-formal-plan-v1",
         "formal_evidence": True, "external_call_performed": False,
+        "experiment_spec": formal_experiment_spec(manifest),
+        "experiment_spec_hash": formal_experiment_spec_hash(manifest),
         "matrix": [cell.model_dump(mode="json") for cell in cells],
         "manifest": manifest.model_dump(mode="json"),
         "execution_command": "uv run python -m bluerange.experiment003 --execute-formal",

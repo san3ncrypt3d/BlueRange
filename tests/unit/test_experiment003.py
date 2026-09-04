@@ -15,12 +15,14 @@ from bluerange.experiment003 import (
     SONNET_CANARY_CONFIG,
     _safe_canary_observability,
     build_decision_contract_provenance,
+    formal_experiment_spec_hash,
     new_formal_manifest,
+    prepare_formal_sonnet,
     prepare_sonnet_canary,
     provider_factory,
     run_sonnet_canary,
 )
-from bluerange.formal_batch import FormalBatch
+from bluerange.formal_batch import ExperimentManifest, FormalBatch
 from bluerange.models.gateway import AnthropicProvider, OutputMode
 from bluerange.protocol_conformance import build_protocol_presentation
 
@@ -72,6 +74,25 @@ def test_complete_static_contract_and_schema_are_hashed_deterministically() -> N
         first.static_system_contract_sha256,
     }) == 3
 
+
+
+def test_formal_spec_hash_excludes_execution_timestamp_and_tracks_scientific_changes() -> None:
+    first = prepare_formal_sonnet()
+    second = prepare_formal_sonnet()
+    assert first["manifest"]["started_at"] != second["manifest"]["started_at"]
+    assert first["experiment_spec_hash"] == second["experiment_spec_hash"]
+    manifest = ExperimentManifest.model_validate(first["manifest"])
+    changed = manifest.model_copy(update={"model": "claude-sonnet-5-changed"})
+    assert formal_experiment_spec_hash(manifest) != formal_experiment_spec_hash(changed)
+    assert "started_at" not in first["experiment_spec"]
+
+
+def test_formal_preparation_is_offline_and_exact() -> None:
+    plan = prepare_formal_sonnet()
+    assert plan["external_call_performed"] is False
+    assert plan["manifest"]["expected_count"] == 24
+    assert len(plan["matrix"]) == 24
+    assert plan["manifest"]["provenance_policy"] == "decision-contract-v1"
 
 def _synthetic_run() -> Any:
     action = SimpleNamespace(
