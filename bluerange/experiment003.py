@@ -83,7 +83,7 @@ SONNET_CANARY_CONFIG = ExperimentV2Configuration(
     model="claude-sonnet-5",
     output_mode=OutputMode.ANTHROPIC_TEXT_JSON,
     timeout_seconds=600,
-    max_output_tokens=8192,
+    max_output_tokens=16384,
 )
 
 
