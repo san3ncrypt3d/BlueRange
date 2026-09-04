@@ -12,10 +12,13 @@ import pytest
 from bluerange.experiment002 import V2Decision
 from bluerange.experiment003 import (
     CANARY_CELL,
+    PROMPT_PATH,
     SONNET_CANARY_CONFIG,
+    _formal_manifest_with_spec_reference,
     _safe_canary_observability,
     build_decision_contract_provenance,
     formal_experiment_spec_hash,
+    formal_sonnet_cells,
     new_formal_manifest,
     prepare_formal_sonnet,
     prepare_sonnet_canary,
@@ -90,6 +93,18 @@ def test_formal_spec_hash_excludes_execution_timestamp_and_tracks_scientific_cha
     changed = manifest.model_copy(update={"model": "claude-sonnet-5-changed"})
     assert formal_experiment_spec_hash(manifest) != formal_experiment_spec_hash(changed)
     assert "started_at" not in first["experiment_spec"]
+
+
+def test_attempt_ids_change_execution_identity_but_not_scientific_identity() -> None:
+    prompt = PROMPT_PATH.read_text(encoding="utf-8")
+    cells = formal_sonnet_cells()
+    first, first_hash = _formal_manifest_with_spec_reference(prompt, cells, "attempt-a")
+    second, second_hash = _formal_manifest_with_spec_reference(prompt, cells, "attempt-b")
+    assert first.experiment_id != second.experiment_id
+    assert first_hash == second_hash
+    assert first.parameters["experiment_spec_hash"] == second.parameters["experiment_spec_hash"]
+    assert first.experiment_id == "attempt-a"
+    assert second.experiment_id == "attempt-b"
 
 
 def test_formal_preparation_is_offline_and_exact() -> None:

@@ -380,14 +380,17 @@ def formal_experiment_spec_hash(manifest: ExperimentManifest) -> str:
     return _hash_bytes(_canonical_bytes(formal_experiment_spec(manifest)))
 
 
-def _formal_manifest_with_spec_reference(prompt: str, cells: list[FormalRunCell]) -> tuple[ExperimentManifest, str]:
-    manifest = new_formal_manifest(
+def _formal_manifest_with_spec_reference(
+    prompt: str, cells: list[FormalRunCell], attempt_id: str = "experiment-003-sonnet"
+) -> tuple[ExperimentManifest, str]:
+    scientific_manifest = new_formal_manifest(
         experiment_id="experiment-003-sonnet", cells=cells,
         config=SONNET_CANARY_CONFIG, prompt=prompt,
     )
-    spec_hash = formal_experiment_spec_hash(manifest)
-    manifest = manifest.model_copy(update={
-        "parameters": {**manifest.parameters, "experiment_spec_hash": spec_hash}
+    spec_hash = formal_experiment_spec_hash(scientific_manifest)
+    manifest = scientific_manifest.model_copy(update={
+        "experiment_id": attempt_id,
+        "parameters": {**scientific_manifest.parameters, "experiment_spec_hash": spec_hash},
     })
     return manifest, spec_hash
 
@@ -413,11 +416,15 @@ def prepare_formal_sonnet() -> dict[str, Any]:
     }
 
 
-def execute_formal_sonnet() -> dict[str, Any]:
+def execute_formal_sonnet(attempt_id: str = "experiment-003-sonnet") -> dict[str, Any]:
     """Execute the formal matrix through the shared checkpointed V2 path."""
     prompt = PROMPT_PATH.read_text(encoding="utf-8")
     cells = formal_sonnet_cells()
-    manifest, _spec_hash = _formal_manifest_with_spec_reference(prompt, cells)
+    manifest, _spec_hash = _formal_manifest_with_spec_reference(prompt, cells, attempt_id)
+    batch_root = Path("results/formal-batches")
+    attempt_root = batch_root / attempt_id
+    if attempt_root.exists():
+        raise SystemExit(f"formal execution attempt path already exists: {attempt_root}")
     budgets = RuntimeBudgets(model_turns=12, investigation_calls=8, response_actions=2)
 
     def run_cell(cell: FormalRunCell) -> Any:
@@ -432,7 +439,7 @@ def execute_formal_sonnet() -> dict[str, Any]:
         )
         return formal_outcome_or_fail(cell, run)
 
-    batch = execute_002r_formal_batch(Path("results/formal-batches"), manifest, run_cell)
+    batch = execute_002r_formal_batch(batch_root, manifest, run_cell)
     aggregate = batch.read_aggregate()
     if aggregate is None:
         raise SystemExit("formal Sonnet batch aborted")
@@ -446,13 +453,14 @@ def main() -> None:
     stage.add_argument("--execute-canary", action="store_true")
     stage.add_argument("--prepare-formal", action="store_true")
     stage.add_argument("--execute-formal", action="store_true")
+    parser.add_argument("--attempt-id", default="experiment-003-sonnet")
     args = parser.parse_args()
     if args.prepare_canary:
         print(json.dumps(prepare_sonnet_canary(), indent=2, sort_keys=True))
     elif args.prepare_formal:
         print(json.dumps(prepare_formal_sonnet(), indent=2, sort_keys=True))
     elif args.execute_formal:
-        execute_formal_sonnet()
+        execute_formal_sonnet(args.attempt_id)
     else:
         run_sonnet_canary()
 
