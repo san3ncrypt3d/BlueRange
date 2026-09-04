@@ -155,5 +155,46 @@ def experiment_results(path: Path) -> None:
     )
 
 
+@app.command("configure")
+def configure(
+    provider: Annotated[str, typer.Option()] = "fake",
+    model: Annotated[str, typer.Option()] = "fake-defender-v1",
+    config: Annotated[Path, typer.Option()] = Path(".bluerange.json"),
+) -> None:
+    """Write non-secret provider/model configuration."""
+    config.write_text(json.dumps({"provider": provider, "model": model}, indent=2) + "\n", encoding="utf-8")
+    typer.echo(f"Saved non-secret configuration: {config.resolve()}")
+
+
+@app.command("doctor")
+def doctor() -> None:
+    """Validate installed scenarios and local runtime prerequisites."""
+    for scenario_id in ("identity-compromise-001", "autonomy-risk-002"):
+        scenario = load_scenario(scenario_id)
+        typer.echo(f"PASS {scenario_id}: {len(scenario.telemetry)} telemetry events")
+    typer.echo("PASS Python package and scenario schemas")
+
+
+@app.command("benchmark")
+def benchmark(
+    scenario: Annotated[str, typer.Option()] = "identity-compromise-001",
+    autonomy: Annotated[str, typer.Option()] = "A2",
+    seed: Annotated[int, typer.Option()] = 42,
+    output: Annotated[Path | None, typer.Option()] = None,
+    control: Annotated[bool, typer.Option()] = False,
+) -> None:
+    """Run one deterministic local benchmark and print its result."""
+    result = run_benchmark(scenario, "baseline", autonomy, seed, control=control)
+    if output:
+        save_result(result, output)
+    typer.echo(json.dumps(result.model_dump(mode="json"), indent=2) if output is None else f"Saved: {output.resolve()}")
+
+
+@app.command("report")
+def report(path: Path) -> None:
+    """Render a concise human-readable report from canonical JSON."""
+    results(path)
+
+
 if __name__ == "__main__":
     app()
