@@ -350,6 +350,7 @@ class FormalBatch:
         self,
         runner: Callable[[FormalRunCell], RunOutcome],
         aggregate_builder: Callable[[list[dict[str, Any]]], dict[str, Any]] | None = None,
+        provider_retries: int = 0,
     ) -> None:
         status = self.read_status()
         if status.experiment_status in {"ABORTED", "COMPLETED"}:
@@ -367,7 +368,28 @@ class FormalBatch:
             self._write_status(status)
             outcome = RunOutcome(run_id=cell.run_id, canonical_record={})
             try:
-                outcome = runner(cell)
+                physical_attempt = 0
+                while True:
+                    physical_attempt += 1
+                    try:
+                        outcome = runner(cell)
+                        break
+                    except Exception as exc:
+                        carried = getattr(exc, "outcome", None)
+                        evidence = carried if isinstance(carried, RunOutcome) else outcome
+                        last = evidence.provider_call_audits[-1] if evidence.provider_call_audits else {}
+                        retryable = (
+                            isinstance(last, dict)
+                            and last.get("validation_failure_code") in {
+                                "EMPTY_TEXT", "NO_TEXT_BLOCK", "INVALID_RESPONSE"
+                            }
+                            and evidence.parsed_decision is None
+                            and evidence.json_valid is None
+                            and evidence.schema_valid is None
+                            and physical_attempt <= provider_retries
+                        )
+                        if not retryable:
+                            raise
                 if outcome.run_id != cell.run_id:
                     raise ValueError("runner returned a mismatched run ID")
                 completed = CompletedRun(run_id=cell.run_id, canonical_record=outcome.canonical_record)

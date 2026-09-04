@@ -400,6 +400,7 @@ def execute_002r_formal_batch(
     parent: Path,
     manifest: ExperimentManifest,
     runner: Any,
+    provider_retries: int = 0,
 ) -> FormalBatch:
     """Run the checkpointed orchestration shared by formal 002R and synthetic tests."""
     def aggregate(records: list[dict[str, Any]]) -> dict[str, Any]:
@@ -412,7 +413,7 @@ def execute_002r_formal_batch(
         }
 
     batch = FormalBatch.create(parent, manifest)
-    batch.execute(runner, aggregate)
+    batch.execute(runner, aggregate, provider_retries=provider_retries)
     return batch
 
 

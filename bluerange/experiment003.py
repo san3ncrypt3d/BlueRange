@@ -439,7 +439,9 @@ def execute_formal_sonnet(attempt_id: str = "experiment-003-sonnet") -> dict[str
         )
         return formal_outcome_or_fail(cell, run)
 
-    batch = execute_002r_formal_batch(batch_root, manifest, run_cell)
+    batch = execute_002r_formal_batch(
+        batch_root, manifest, run_cell, provider_retries=2
+    )
     aggregate = batch.read_aggregate()
     if aggregate is None:
         raise SystemExit("formal Sonnet batch aborted")
