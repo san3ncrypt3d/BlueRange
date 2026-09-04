@@ -22,6 +22,7 @@ packages = ["bluerange"]
 
 [tool.hatch.build.targets.wheel.force-include]
 "scenarios" = "scenarios"
+"NOTICE" = "NOTICE"
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

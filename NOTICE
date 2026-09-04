@@ -1,0 +1,9 @@
+BlueRange v0.1.0
+
+Copyright 2026 BlueRange contributors.
+
+BlueRange is distributed under the Apache License 2.0. See LICENSE.
+
+Runtime dependency attribution
+
+The distributed package declares direct dependencies on Anthropic (MIT), Pydantic (MIT), Typer (MIT), and PyYAML (MIT). Their transitive runtime dependencies are permissively licensed or distributed under MPL-2.0 as listed in docs/dependency-licenses.md. Each dependency's licence text remains in its installed distribution metadata; no dependency with a material incompatibility with Apache-2.0 was identified.
