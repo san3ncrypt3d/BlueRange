@@ -47,6 +47,18 @@ class ProviderCallAudit(FrozenStrictModel):
     request_id: SafeId | None = None
     api_error_type: SafeId | None = None
     api_error_message: str | None = Field(default=None, max_length=500)
+    stop_reason: str | None = None
+    content_block_count: int | None = Field(default=None, ge=0)
+    content_block_types: list[str] | None = None
+    text_block_count: int | None = Field(default=None, ge=0)
+    selected_text_exists: bool | None = None
+    text_length_bucket: str | None = None
+    usage_present: bool | None = None
+    input_tokens_present: bool | None = None
+    input_tokens_valid: bool | None = None
+    output_tokens_present: bool | None = None
+    output_tokens_valid: bool | None = None
+    validation_failure_code: str | None = None
 
 
 class ModelProvider(Protocol):
@@ -147,6 +159,18 @@ class AnthropicProvider:
         request_id: str | None = None,
         api_error_type: str | None = None,
         api_error_message: str | None = None,
+        stop_reason: str | None = None,
+        content_block_count: int | None = None,
+        content_block_types: list[str] | None = None,
+        text_block_count: int | None = None,
+        selected_text_exists: bool | None = None,
+        text_length_bucket: str | None = None,
+        usage_present: bool | None = None,
+        input_tokens_present: bool | None = None,
+        input_tokens_valid: bool | None = None,
+        output_tokens_present: bool | None = None,
+        output_tokens_valid: bool | None = None,
+        validation_failure_code: str | None = None,
     ) -> ProviderCallAudit:
         safe_request_id = request_id if request_id and len(request_id) <= 128 else None
         audit = ProviderCallAudit(
@@ -168,6 +192,18 @@ class AnthropicProvider:
             request_id=safe_request_id,
             api_error_type=api_error_type,
             api_error_message=api_error_message,
+            stop_reason=stop_reason,
+            content_block_count=content_block_count,
+            content_block_types=content_block_types,
+            text_block_count=text_block_count,
+            selected_text_exists=selected_text_exists,
+            text_length_bucket=text_length_bucket,
+            usage_present=usage_present,
+            input_tokens_present=input_tokens_present,
+            input_tokens_valid=input_tokens_valid,
+            output_tokens_present=output_tokens_present,
+            output_tokens_valid=output_tokens_valid,
+            validation_failure_code=validation_failure_code,
         )
         self.audits.append(audit)
         return audit
@@ -249,23 +285,68 @@ class AnthropicProvider:
             raise ProviderError(audit.sanitized_error or "provider request failed", audit) from None
 
         request_id = getattr(payload, "id", None)
+        stop_reason = getattr(payload, "stop_reason", None)
+        blocks = getattr(payload, "content", None)
+        block_types = None
+        content_count = None
+        text_count = None
+        selected = None
+        length_bucket = None
+        usage_present = hasattr(payload, "usage") and getattr(payload, "usage", None) is not None
+        input_present = output_present = input_valid = output_valid = None
+        failure_code = None
+        raw = ""
+        usage = TokenUsage()
         try:
-            text_blocks = [
-                block for block in payload.content if getattr(block, "type", None) == "text"
-            ]
-            if len(text_blocks) != 1:
+            if not isinstance(blocks, list):
+                failure_code = "UNEXPECTED_BLOCK_STRUCTURE"
+                raise ValueError
+            content_count = len(blocks)
+            block_types = [str(getattr(block, "type", "<missing>"))[:64] for block in blocks]
+            text_blocks = [block for block in blocks if getattr(block, "type", None) == "text"]
+            text_count = len(text_blocks)
+            if text_count == 0:
+                selected = False
+                failure_code = "NO_TEXT_BLOCK"
+                raise ValueError
+            if text_count > 1:
+                selected = False
+                failure_code = "MULTIPLE_TEXT_BLOCKS"
                 raise ValueError
             text = getattr(text_blocks[0], "text", None)
-            if not isinstance(text, str) or not text:
+            selected = text is not None
+            if not isinstance(text, str):
+                failure_code = "INVALID_TEXT_TYPE"
                 raise ValueError
+            if not text:
+                failure_code = "EMPTY_TEXT"
+                raise ValueError
+            length_bucket = "0-255" if len(text) <= 255 else "256-1023" if len(text) <= 1023 else "1024+"
             raw = text
-            input_tokens = int(payload.usage.input_tokens)
-            output_tokens = int(payload.usage.output_tokens)
-            usage = TokenUsage(
-                prompt_tokens=input_tokens,
-                completion_tokens=output_tokens,
-                total_tokens=input_tokens + output_tokens,
-            )
+            if not usage_present:
+                failure_code = "MISSING_USAGE"
+                raise ValueError
+            input_present = hasattr(payload.usage, "input_tokens")
+            output_present = hasattr(payload.usage, "output_tokens")
+            try:
+                input_tokens = int(payload.usage.input_tokens)
+                input_valid = input_tokens >= 0
+            except (AttributeError, TypeError, ValueError, OverflowError):
+                failure_code = "INVALID_INPUT_TOKENS"
+                raise ValueError from None
+            try:
+                output_tokens = int(payload.usage.output_tokens)
+                output_valid = output_tokens >= 0
+            except (AttributeError, TypeError, ValueError, OverflowError):
+                failure_code = "INVALID_OUTPUT_TOKENS"
+                raise ValueError from None
+            if not input_valid:
+                failure_code = "INVALID_INPUT_TOKENS"
+                raise ValueError
+            if not output_valid:
+                failure_code = "INVALID_OUTPUT_TOKENS"
+                raise ValueError
+            usage = TokenUsage(prompt_tokens=input_tokens, completion_tokens=output_tokens, total_tokens=input_tokens + output_tokens)
         except (AttributeError, TypeError, ValueError, OverflowError):
             audit = self._audit(
                 request,
@@ -275,6 +356,18 @@ class AnthropicProvider:
                 category="INVALID_RESPONSE",
                 generation_began=True,
                 request_id=request_id,
+                stop_reason=stop_reason if isinstance(stop_reason, str) else None,
+                content_block_count=content_count,
+                content_block_types=block_types,
+                text_block_count=text_count,
+                selected_text_exists=selected,
+                text_length_bucket=length_bucket,
+                usage_present=usage_present,
+                input_tokens_present=input_present,
+                input_tokens_valid=input_valid,
+                output_tokens_present=output_present,
+                output_tokens_valid=output_valid,
+                validation_failure_code=failure_code or "UNEXPECTED_BLOCK_STRUCTURE",
             )
             raise ProviderError(audit.sanitized_error or "invalid response", audit) from None
         audit = self._audit(

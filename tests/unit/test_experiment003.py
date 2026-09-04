@@ -26,7 +26,8 @@ from bluerange.experiment003 import (
     run_sonnet_canary,
 )
 from bluerange.formal_batch import ExperimentManifest, FormalBatch
-from bluerange.models.gateway import AnthropicProvider, OutputMode
+from bluerange.models.gateway import AnthropicProvider, OutputMode, ProviderError
+from bluerange.models.schemas import ModelMessage, ProviderRequest
 from bluerange.protocol_conformance import build_protocol_presentation
 
 
@@ -226,3 +227,80 @@ def test_new_formal_manifest_requires_complete_contract(tmp_path: Path) -> None:
     )
     with pytest.raises(ValueError, match="decision-contract provenance"):
         FormalBatch.create(tmp_path, incomplete)
+
+
+def _provider_request() -> ProviderRequest:
+    return ProviderRequest(messages=[ModelMessage(role="user", content="x")], tools=[], timeout_seconds=30, audit_run_id="test-run")
+
+
+class _FakeMessages:
+    def __init__(self, payload: object) -> None:
+        self.payload = payload
+        self.calls = 0
+
+    def create(self, **_: object) -> object:
+        self.calls += 1
+        return self.payload
+
+
+class _FakeClient:
+    def __init__(self, payload: object) -> None:
+        self.messages = _FakeMessages(payload)
+
+
+def test_anthropic_bounded_invalid_response_diagnostics() -> None:
+    cases = [
+        ("NO_TEXT_BLOCK", [], 0, [], False),
+        ("MULTIPLE_TEXT_BLOCKS", [SimpleNamespace(type="text", text="RAW_ALPHA"), SimpleNamespace(type="text", text="RAW_BETA")], 2, ["text", "text"], False),
+        ("EMPTY_TEXT", [SimpleNamespace(type="text", text="")], 1, ["text"], True),
+        ("INVALID_TEXT_TYPE", [SimpleNamespace(type="text", text=3)], 1, ["text"], True),
+        ("MISSING_USAGE", [SimpleNamespace(type="text", text="x")], 1, ["text"], True),
+        ("INVALID_INPUT_TOKENS", [SimpleNamespace(type="text", text="x")], 1, ["text"], True),
+        ("INVALID_OUTPUT_TOKENS", [SimpleNamespace(type="text", text="x")], 1, ["text"], True),
+        ("UNEXPECTED_BLOCK_STRUCTURE", "not-a-list", None, None, None),
+    ]
+    for code, blocks, count, types, selected in cases:
+        usage = SimpleNamespace(input_tokens=1, output_tokens=1)
+        if code == "MISSING_USAGE":
+            payload = SimpleNamespace(id="msg-test", stop_reason="end_turn", content=blocks)
+        elif code == "INVALID_INPUT_TOKENS":
+            usage.input_tokens = "bad"
+            payload = SimpleNamespace(id="msg-test", stop_reason="end_turn", content=blocks, usage=usage)
+        elif code == "INVALID_OUTPUT_TOKENS":
+            usage.output_tokens = "bad"
+            payload = SimpleNamespace(id="msg-test", stop_reason="end_turn", content=blocks, usage=usage)
+        else:
+            payload = SimpleNamespace(id="msg-test", stop_reason="end_turn", content=blocks, usage=usage)
+        client = _FakeClient(payload)
+        with pytest.raises(ProviderError) as exc:
+            AnthropicProvider("claude-sonnet-5", client=client).complete(_provider_request())
+        audit = exc.value.audit
+        assert audit is not None
+        assert audit.validation_failure_code == code
+        assert audit.content_block_count == count
+        assert audit.content_block_types == types
+        assert audit.text_block_count == (0 if code == "NO_TEXT_BLOCK" else count if count is not None else None)
+        assert audit.selected_text_exists is selected
+        assert audit.request_id == "msg-test"
+        assert audit.stop_reason == "end_turn"
+        assert audit.sanitized_error == "Anthropic returned an invalid response envelope"
+        assert client.messages.calls == 1
+        assert "RAW_ALPHA" not in audit.model_dump_json()
+        assert "RAW_BETA" not in audit.model_dump_json()
+        assert "bad" not in audit.model_dump_json()
+
+
+def test_anthropic_valid_text_and_malformed_json_remain_successful_transport() -> None:
+    for text in ["{\"not\": \"the decision schema\"}", "valid text"]:
+        payload = SimpleNamespace(id="msg-valid", stop_reason="end_turn", content=[SimpleNamespace(type="text", text=text)], usage=SimpleNamespace(input_tokens=2, output_tokens=3))
+        provider = AnthropicProvider("claude-sonnet-5", client=_FakeClient(payload))
+        response = provider.complete(_provider_request())
+        assert response.raw == text
+        assert provider.audits[-1].error_category is None
+        assert provider.audits[-1].validation_failure_code is None
+
+
+def test_anthropic_multiple_blocks_are_rejected_without_concatenation() -> None:
+    payload = SimpleNamespace(id="msg-multi", stop_reason="end_turn", content=[SimpleNamespace(type="text", text="left"), SimpleNamespace(type="text", text="right")], usage=SimpleNamespace(input_tokens=1, output_tokens=1))
+    with pytest.raises(ProviderError):
+        AnthropicProvider("claude-sonnet-5", client=_FakeClient(payload)).complete(_provider_request())
