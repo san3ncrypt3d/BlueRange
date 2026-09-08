@@ -1,0 +1,2 @@
+scenario,experiment,cells,repair_required,physical_repair_requests,successful_logical_repairs,failed_logical_repairs,first_pass_valid,post_repair_valid,finalised,grounded_finalised
+scenario2,exp004-replacement-attempt2-20260904200401-2071270f,48,30/48,31,17/30,13/30,32/48,34/48,25/48,25/48

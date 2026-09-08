@@ -1,0 +1,30 @@
+{
+  "release_name": "BlueRange TDSC Reproducibility Data Release v1",
+  "tag": "tdsc-2026-data-v1",
+  "repository": "https://github.com/san3ncrypt3d/BlueRange",
+  "repository_commit": "558a2f99518f4a205f44862e1b3db5e7ad245d9e",
+  "software_release": "v0.1.0",
+  "authoritative_archive_sha256": "e3ecbe8d54e58e30a021d92281be654f376ac816ce5e16fb2012359ac5674806",
+  "created_utc": "2026-09-08T15:40:17Z",
+  "manuscript_published": false,
+  "experiments_rerun": false,
+  "files": {
+    "publication/tdsc-2026/CITATION.md": "166ca42341c3f1a6e79ff01aeaaf245c7a18977175c7f9b1a1889da211ab2f52",
+    "publication/tdsc-2026/CODE_DATA_AVAILABILITY.md": "65ba24c804258bd373068792c0af6a9893092ed45975fc443704e978f6c23891",
+    "publication/tdsc-2026/DATA_DICTIONARY.md": "ce94ff60362231ecf8fc464acd3060282a9115fe537b065488f0d1069e553fac",
+    "publication/tdsc-2026/PROVENANCE.md": "78deb0ead56b9917eb4581f32cc49935a27de4faf15694061e33404d659b7326",
+    "publication/tdsc-2026/PUBLIC_RELEASE_SECURITY_AUDIT.md": "41aa8efb4b94d1f896cae5b40cbd73f4f0d3058b185b4a9aa497fe52dd038175",
+    "publication/tdsc-2026/README.md": "98ad817de6790c10b7665058aaea49e6563f8571e90836b71ebbeae9ef3106da",
+    "publication/tdsc-2026/REPRODUCIBILITY.md": "03e0e30744b93a1a53b3f2d3dff411dda7d7bffef5a9b74193d184879952ac21",
+    "publication/tdsc-2026/ZENODO_METADATA.md": "92e895f32497c4d95a03bc65316895c7f30f99590e8ddda4d5515586b002b3f0",
+    "publication/tdsc-2026/data/canonical_results.json": "6af033dc71b40d8198feae3e1897db5751aec4534d39b086921a81b824705db6",
+    "publication/tdsc-2026/data/protocol_reliability.csv": "a376ea0130cabc7883e22f64aeaf2daa60f1d00c896ecf076b1a4b4773601be9",
+    "publication/tdsc-2026/data/scenario1_qwen_summary.csv": "b9da77c7d7c7497acfb36725c62da6930dbe84881c6a897ab528fb1baf6f0d0b",
+    "publication/tdsc-2026/data/scenario1_sonnet_summary.csv": "1056f2bcad3c06963b57badd27a970228efecbec3af4fce0bacb1fa19a0d0820",
+    "publication/tdsc-2026/data/scenario2_authority_results.csv": "2270e56b6e7a51af96188e3aff4450c5714786c0fbfb65c45fde450c1e30c883",
+    "publication/tdsc-2026/data/scenario2_evidence_profile_results.csv": "27883ddc6b672e3e5bb12e196b8e39d1cb3bb23144acd0d6bdf50839dd835b26",
+    "publication/tdsc-2026/data/scenario2_model_results.csv": "ce09103489a9114cc2f48448fe4259c08d2aa9ed77e31f7f8909d65d0bd857d9",
+    "publication/tdsc-2026/data/scenario2_overall_results.csv": "32140a01011f2e997e053808f452778a539f6a09e9ff156ca4244c4371837e30",
+    "publication/tdsc-2026/scripts/regenerate_tables.py": "8674364ffc4bfd71dc193c81fa197cc7dbc71e5288ed91172399e64a4cd3fa37"
+  }
+}

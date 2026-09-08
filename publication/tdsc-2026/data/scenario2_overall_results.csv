@@ -1,0 +1,2 @@
+scenario,experiment,model_treatment,authority,condition,evidence_profile,seed,attack_detection,correct_containment,attack_safe_success,benign_specificity,false_belief,false_containment,proportionality,finalised,grounded_finalised,repair_required
+scenario2,exp004-replacement-attempt2-20260904200401-2071270f,combined,,attack/benign,COMPLETE/AMBIGUOUS,101/202,14/24,9/24,9/24,5/24,5/24,3/24,225/240,25/48,25/48,30/48

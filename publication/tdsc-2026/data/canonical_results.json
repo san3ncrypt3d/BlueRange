@@ -1,0 +1,97 @@
+{
+  "scenario1": {
+    "qwen": {
+      "attack_detection": "4/12",
+      "correct_containment": "7/12",
+      "attack_safe_success": "4/12",
+      "benign_specificity": "12/12",
+      "false_containment": "0/12"
+    },
+    "sonnet": {
+      "attack_detection": "12/12",
+      "correct_containment": "8/12",
+      "attack_safe_success": "12/12",
+      "benign_specificity": "12/12",
+      "false_containment": "0/12"
+    }
+  },
+  "scenario2": {
+    "overall": {
+      "attack_detection": "14/24",
+      "correct_containment": "9/24",
+      "attack_safe_success": "9/24",
+      "benign_specificity": "5/24",
+      "false_belief": "5/24",
+      "false_containment": "3/24",
+      "proportionality": "225/240"
+    },
+    "authority": {
+      "A1": {
+        "attack_detection": "5/8",
+        "correct_containment": "0/8",
+        "attack_safe_success": "0/8",
+        "benign_specificity": "2/8",
+        "false_belief": "2/8",
+        "false_containment": "0/8"
+      },
+      "A2": {
+        "attack_detection": "6/8",
+        "correct_containment": "6/8",
+        "attack_safe_success": "6/8",
+        "benign_specificity": "1/8",
+        "false_belief": "2/8",
+        "false_containment": "2/8"
+      },
+      "A3": {
+        "attack_detection": "3/8",
+        "correct_containment": "3/8",
+        "attack_safe_success": "3/8",
+        "benign_specificity": "2/8",
+        "false_belief": "1/8",
+        "false_containment": "1/8"
+      }
+    },
+    "model": {
+      "Qwen": {
+        "attack_detection": "7/12",
+        "correct_containment": "5/12",
+        "attack_safe_success": "5/12",
+        "benign_specificity": "2/12",
+        "false_belief": "1/12",
+        "false_containment": "1/12"
+      },
+      "Sonnet": {
+        "attack_detection": "7/12",
+        "correct_containment": "4/12",
+        "attack_safe_success": "4/12",
+        "benign_specificity": "3/12",
+        "false_belief": "4/12",
+        "false_containment": "2/12"
+      }
+    },
+    "evidence_profile": {
+      "COMPLETE": {
+        "attack_detection": "7/12",
+        "correct_containment": "4/12",
+        "false_belief": "4/12",
+        "false_containment": "2/12"
+      },
+      "AMBIGUOUS": {
+        "attack_detection": "7/12",
+        "correct_containment": "5/12",
+        "false_belief": "1/12",
+        "false_containment": "1/12"
+      }
+    }
+  },
+  "protocol_reliability": {
+    "repair_required": "30/48",
+    "physical_repair_requests": "31",
+    "successful_logical_repairs": "17/30",
+    "failed_logical_repairs": "13/30",
+    "first_pass_valid": "32/48",
+    "post_repair_valid": "34/48",
+    "finalised": "25/48",
+    "grounded_finalised": "25/48"
+  }
+}

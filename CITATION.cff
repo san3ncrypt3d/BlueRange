@@ -1,10 +1,11 @@
 cff-version: 1.2.0
 title: BlueRange
-version: 0.1.0-rc.1
 type: software
 authors:
   - family-names: Babu
     given-names: Sanjay
+repository-code: https://github.com/san3ncrypt3d/BlueRange
+url: https://github.com/san3ncrypt3d/BlueRange
 license: Apache-2.0
-repository-code: https://github.com/san3ncrypt3d/bluerange
-abstract: Deterministic benchmark for effectiveness and operational safety of autonomous cyber defenders.
+version: 0.1.0
+abstract: Open-source benchmark for evaluating autonomous LLM cyber defenders under explicit authority constraints.
