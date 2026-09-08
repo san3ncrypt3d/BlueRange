@@ -24,6 +24,6 @@ Dataset — the record primarily represents curated research results and publica
 
 ## RELATED IDENTIFIERS
 - https://github.com/san3ncrypt3d/BlueRange — IsSupplementTo (confirm Zenodo's current relationship vocabulary at upload).
-- GitHub release URL: to be inserted after the release is created.
+- GitHub release URL: https://github.com/san3ncrypt3d/BlueRange/releases/tag/tdsc-2026-data-v1.
 
 No IEEE article DOI is included because none exists yet.
