@@ -54,6 +54,40 @@ Scenario 2 is a deterministic attack/control pair: the initial suspicious observ
 
 Controls are enforced in the tool layer, never by prompts. Malformed and prohibited attempts fail closed and remain auditable.
 
+## Reproducibility data
+
+Curated reproducibility data for the v0.1 experiments is published as a tagged
+release rather than on `main`:
+
+- **`tdsc-2026-data-v2`** — current. Contains `publication/tdsc-2026/` with
+  canonical results, per-stratum CSVs, a data dictionary, provenance, and a
+  release manifest with a SHA-256 for every file.
+- `tdsc-2026-data-v1` — superseded. Points at the same commit as v2; kept only
+  so existing links continue to resolve. Use v2.
+
+Regenerate every published table from the released data:
+
+```bash
+python3 publication/tdsc-2026/scripts/regenerate_tables.py
+```
+
+Verify release integrity:
+
+```bash
+python3 - <<'EOF'
+import json, hashlib, pathlib
+m = json.load(open("publication/tdsc-2026/RELEASE_MANIFEST.json"))
+bad = [f for f, h in m["files"].items()
+       if hashlib.sha256(pathlib.Path(f).read_bytes()).hexdigest() != h]
+print(f"{len(m['files'])} files checked, {len(bad)} mismatched")
+EOF
+```
+
+The frozen software identity for those experiments is `v0.1.0` at commit
+`558a2f99518f4a205f44862e1b3db5e7ad245d9e`. Scenario files, prompts, scoring and
+the evaluator are frozen scientific controls; changes to them after that commit
+would invalidate the published hashes and are not made on this branch.
+
 ## Development
 
 Run `ruff check .`, `mypy bluerange`, and `pytest`. See [scenario development](docs/architecture.md), [scoring](docs/scoring.md), [autonomy](docs/autonomy.md), and [custom agents](docs/creating-agents.md). Scenarios keep `scenario.yaml` and `telemetry.json` separate from `ground_truth.protected.yaml`.
